@@ -5,29 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CinéMémoire</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
-
-<!-- ══════════════════════════════════════════════
-     🔧 SUPABASE CONFIG — 填入你的專案資訊
-     ══════════════════════════════════════════════ -->
 <script>
-  const SUPABASE_URL = 'https://syaujdxsefeipksfvuxj.supabase.co';   // ← 改這裡
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXVqZHhzZWZlaXBrc2Z2dXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDgzOTEsImV4cCI6MjA5ODMyNDM5MX0.ZC2UCq3C5nC7KxXg6Eijl9yvfWb0nexDbLAUoczGJm8';                 // ← 改這裡
+  const SUPABASE_URL = 'https://syaujdxsefeipksfvuxj.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXVqZHhzZWZlaXBrc2Z2dXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDgzOTEsImV4cCI6MjA5ODMyNDM5MX0.ZC2UCq3C5nC7KxXg6Eijl9yvfWb0nexDbLAUoczGJm8';
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root {
-  --bg:#1a1818; --bg-card:#221f1f; --bg-modal:#1e1b1b; --surface:#2a2626;
-  --border:#3a3232; --border-soft:#2e2828;
-  --pink:#d4869a; --pink-deep:#b8697f; --pink-pale:#e8b4c2; --pink-muted:rgba(212,134,154,0.15);
-  --text:#ede8e4; --text-mid:#a89890; --text-dim:#6b5c58;
-  --white:#f5f0ed; --shadow:rgba(0,0,0,0.5); --shadow-pink:rgba(212,134,154,0.12);
-  --green:#6dba8a; --red:#d47070;
-}
+:root{--bg:#1a1818;--bg-card:#221f1f;--bg-modal:#1e1b1b;--surface:#2a2626;--border:#3a3232;--border-soft:#2e2828;--pink:#d4869a;--pink-deep:#b8697f;--pink-pale:#e8b4c2;--pink-muted:rgba(212,134,154,0.15);--text:#ede8e4;--text-mid:#a89890;--text-dim:#6b5c58;--white:#f5f0ed;--shadow:rgba(0,0,0,0.5);--shadow-pink:rgba(212,134,154,0.12);--green:#6dba8a;--red:#d47070}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-
-/* ── HEADER ── */
 header{position:sticky;top:0;z-index:100;background:rgba(26,24,24,0.93);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{display:flex;flex-direction:column;gap:3px}
 .logo-main{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.55rem;color:var(--text);letter-spacing:0.04em}
@@ -40,8 +26,6 @@ nav button:hover{color:var(--pink-pale)}
 .btn-new{background:var(--pink-deep);color:var(--white);border:none;padding:0.46rem 1.25rem;font-family:'Courier Prime',monospace;font-size:0.67rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background 0.2s,transform 0.15s}
 .btn-new:hover{background:var(--pink);transform:translateY(-1px)}
 .btn-new:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-
-/* ── HERO ── */
 .hero{padding:4.5rem 2.5rem 3rem;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--border-soft);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;top:-80px;right:-80px;width:360px;height:360px;background:radial-gradient(circle,rgba(212,134,154,0.06) 0%,transparent 70%);pointer-events:none}
 .hero-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.8rem,5.5vw,4.8rem);line-height:1.08}
@@ -50,15 +34,11 @@ nav button:hover{color:var(--pink-pale)}
 .stat{text-align:right}
 .stat-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.6rem;display:block;line-height:1}
 .stat-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.22em;color:var(--text-dim);text-transform:uppercase;margin-top:5px;display:block}
-
-/* ── FILTER ── */
 .filter-bar{padding:1rem 2.5rem;display:flex;gap:0.5rem;align-items:center;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
 .filter-label{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.22em;color:var(--text-dim);text-transform:uppercase;margin-right:0.6rem}
 .chip{padding:0.26rem 0.82rem;border:1px solid var(--border);background:transparent;border-radius:999px;font-family:'Jost',sans-serif;font-weight:300;font-size:0.7rem;color:var(--text-mid);cursor:pointer;transition:all 0.18s}
 .chip:hover{border-color:var(--pink-deep);color:var(--pink-pale)}
 .chip.active{background:var(--pink-muted);border-color:var(--pink-deep);color:var(--pink-pale)}
-
-/* ── GRID ── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));padding:2.2rem 2.5rem;gap:1.6rem}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .card{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:4px;overflow:hidden;cursor:pointer;transition:transform 0.28s,box-shadow 0.28s,border-color 0.2s}
@@ -77,8 +57,6 @@ nav button:hover{color:var(--pink-pale)}
 .star.on{color:var(--pink)}
 .card-excerpt{font-size:0.77rem;font-weight:300;line-height:1.65;color:var(--text-mid);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card-genre{display:inline-block;margin-top:0.7rem;padding:0.17rem 0.52rem;border:1px solid var(--border);font-family:'Courier Prime',monospace;font-size:0.57rem;letter-spacing:0.1em;color:var(--text-dim);border-radius:2px;text-transform:uppercase}
-
-/* ── OVERLAYS ── */
 .overlay{position:fixed;inset:0;background:rgba(8,6,6,0.75);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal{background:var(--bg-modal);border:1px solid var(--border);border-radius:6px;width:100%;max-width:620px;max-height:90vh;overflow-y:auto}
@@ -89,8 +67,6 @@ nav button:hover{color:var(--pink-pale)}
 .modal-x{background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--text-dim);transition:color 0.2s;line-height:1}
 .modal-x:hover{color:var(--pink)}
 .modal-body{padding:1.5rem 2rem 2rem}
-
-/* ── FORM ── */
 .fg{margin-bottom:1.25rem}
 .fg label{display:block;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.45rem}
 input[type=text],input[type=number],input[type=email],input[type=password],textarea,select{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:0.6rem 0.8rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.88rem;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s;-webkit-appearance:none}
@@ -99,19 +75,12 @@ input:focus,textarea:focus,select:focus{border-color:var(--pink-deep);box-shadow
 select option{background:var(--surface)}
 textarea{resize:vertical;min-height:90px;line-height:1.65}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.star-pick{display:flex;gap:4px;flex-direction:row-reverse;justify-content:flex-end}
-/* ── RATING SLIDER ── */
 .rating-wrap{display:flex;align-items:center;gap:0.8rem}
 .rating-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
 .rating-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--pink-deep);cursor:pointer;transition:background 0.2s,transform 0.15s}
 .rating-slider::-webkit-slider-thumb:hover{background:var(--pink);transform:scale(1.2)}
 .rating-num-input{width:58px;text-align:center;padding:0.4rem 0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem}
 .rating-display{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--pink);white-space:nowrap}
-.star-pick input{display:none}
-.star-pick label{font-size:1.55rem;color:var(--border);cursor:pointer;transition:color 0.15s;line-height:1}
-.star-pick label:hover,.star-pick label:hover~label,.star-pick input:checked~label{color:var(--pink)}
-
-/* ── PHOTO UPLOAD ── */
 .photo-drop{border:1px dashed var(--border);border-radius:4px;padding:1.4rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;background:var(--surface)}
 .photo-drop:hover{border-color:var(--pink-deep)}
 .photo-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
@@ -122,8 +91,6 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 .photo-thumb{width:68px;height:68px;object-fit:cover;border-radius:3px;border:1px solid var(--border);display:block}
 .photo-remove{position:absolute;top:-5px;right:-5px;background:var(--red);color:white;border:none;border-radius:50%;width:16px;height:16px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;padding:0}
 .photo-remove:hover{background:#b85555}
-
-/* ── BUTTONS ── */
 .btn-primary{background:var(--pink-deep);color:var(--white);border:none;padding:0.75rem 2rem;font-family:'Courier Prime',monospace;font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;border-radius:3px;width:100%;margin-top:0.5rem;transition:background 0.2s,transform 0.15s}
 .btn-primary:hover{background:var(--pink);transform:translateY(-1px)}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
@@ -131,8 +98,6 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 .btn-sec:hover{border-color:var(--pink-deep);color:var(--pink-pale)}
 .btn-danger{background:transparent;color:var(--text-dim);border:1px solid var(--border-soft);padding:0.44rem 1.1rem;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s;margin-top:1rem}
 .btn-danger:hover{border-color:#7a3333;color:var(--red)}
-
-/* ── DETAIL MODAL ── */
 .detail-cover{width:100%;max-height:280px;object-fit:cover;display:block}
 .detail-cover-empty{width:100%;height:160px;background:linear-gradient(135deg,var(--surface),#2e2222);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--text-dim);opacity:0.4}
 .detail-stars{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--pink);line-height:1}
@@ -141,41 +106,51 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 .detail-photos{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.8rem}
 .detail-photo{width:76px;height:76px;object-fit:cover;border-radius:3px;border:1px solid var(--border);cursor:pointer;transition:transform 0.2s}
 .detail-photo:hover{transform:scale(1.05);border-color:var(--pink-deep)}
-
-/* ── AUTH MODAL ── */
+.comments-section{border-top:1px solid var(--border-soft);margin-top:1.5rem;padding-top:1.5rem}
+.comments-title{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.22em;color:var(--text-dim);text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.comment-item{padding:0.8rem 0;border-bottom:1px solid var(--border-soft)}
+.comment-item:last-child{border-bottom:none}
+.comment-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem}
+.comment-email{font-family:'Courier Prime',monospace;font-size:0.58rem;color:var(--pink-pale);letter-spacing:0.08em}
+.comment-date{font-family:'Courier Prime',monospace;font-size:0.55rem;color:var(--text-dim)}
+.comment-text{font-size:0.85rem;font-weight:300;line-height:1.65;color:var(--text-mid)}
+.comment-actions{display:flex;gap:0.5rem;margin-top:0.4rem}
+.comment-approve{font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;background:rgba(109,186,138,0.1);border:1px solid rgba(109,186,138,0.3);color:var(--green);padding:0.2rem 0.55rem;border-radius:2px;cursor:pointer}
+.comment-approve:hover{background:rgba(109,186,138,0.2)}
+.comment-reject{font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;background:rgba(212,112,112,0.1);border:1px solid rgba(212,112,112,0.3);color:var(--red);padding:0.2rem 0.55rem;border-radius:2px;cursor:pointer}
+.comment-reject:hover{background:rgba(212,112,112,0.2)}
+.comment-pending-badge{font-family:'Courier Prime',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;background:rgba(212,134,154,0.1);border:1px solid var(--pink-deep);color:var(--pink);padding:0.15rem 0.4rem;border-radius:2px}
+.pending-count{background:var(--pink-deep);color:white;border-radius:999px;font-size:0.55rem;padding:0.1rem 0.45rem;font-family:'Courier Prime',monospace}
+.comment-input-wrap{margin-top:1rem}
+.comment-input-wrap textarea{min-height:60px;font-size:0.85rem}
+.comment-submit{background:transparent;color:var(--pink-pale);border:1px solid var(--pink-deep);padding:0.4rem 1rem;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s;margin-top:0.5rem}
+.comment-submit:hover{background:var(--pink-muted)}
+.comment-submit:disabled{opacity:0.4;cursor:not-allowed}
+.comment-login-hint{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.1em;color:var(--text-dim);text-transform:uppercase;margin-top:0.8rem}
+.comment-login-hint a{color:var(--pink);cursor:pointer;text-decoration:underline}
 .auth-tabs{display:flex;gap:0;border-bottom:1px solid var(--border-soft);margin-bottom:1.5rem}
 .auth-tab{flex:1;padding:0.6rem;font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);background:none;border:none;cursor:pointer;transition:all 0.2s;border-bottom:2px solid transparent;margin-bottom:-1px}
 .auth-tab.active{color:var(--pink-pale);border-bottom-color:var(--pink-deep)}
 .auth-msg{font-family:'Courier Prime',monospace;font-size:0.62rem;margin-bottom:0.8rem;display:none;padding:0.5rem 0.7rem;border-radius:3px}
 .auth-msg.error{display:block;color:var(--red);background:rgba(212,112,112,0.1);border:1px solid rgba(212,112,112,0.2)}
 .auth-msg.success{display:block;color:var(--green);background:rgba(109,186,138,0.1);border:1px solid rgba(109,186,138,0.2)}
-
-/* ── TOAST ── */
 .toast{position:fixed;bottom:2rem;right:2rem;z-index:999;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:0.7rem 1.2rem;font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.1em;color:var(--text-mid);transform:translateY(20px);opacity:0;transition:all 0.3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{border-color:rgba(109,186,138,0.4);color:var(--green)}
 .toast.error{border-color:rgba(212,112,112,0.4);color:var(--red)}
-
-/* ── LOADING ── */
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--pink);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-overlay{position:fixed;inset:0;z-index:400;background:rgba(26,24,24,0.6);display:none;align-items:center;justify-content:center}
 .loading-overlay.show{display:flex}
 .loading-box{background:var(--bg-modal);border:1px solid var(--border);border-radius:6px;padding:2rem 3rem;text-align:center}
 .loading-box p{font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--text-dim);margin-top:0.8rem;text-transform:uppercase}
-
-/* ── EMPTY ── */
 .empty{grid-column:1/-1;text-align:center;padding:6rem 2rem}
 .empty-icon{font-size:2.5rem;margin-bottom:1.2rem;opacity:0.3}
 .empty h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.5rem;color:var(--text-mid);margin-bottom:0.6rem}
 .empty p{font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);opacity:0.45}
-
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
-
-/* ── RESPONSIVE ── */
 @media(max-width:600px){
   header{padding:0 1rem}
   .hero{flex-direction:column;gap:2rem;padding:3rem 1rem 2rem}
@@ -190,8 +165,6 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 </style>
 </head>
 <body>
-
-<!-- ── HEADER ── -->
 <header>
   <div class="logo">
     <span class="logo-main">Ciné<span>Mémoire</span></span>
@@ -206,8 +179,6 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
   </nav>
   <button class="btn-new" id="btn-new" disabled>+ New Entry</button>
 </header>
-
-<!-- ── HERO ── -->
 <div class="hero">
   <div><div class="hero-title">Cinema<br><em>Diary</em></div></div>
   <div class="hero-stats">
@@ -215,8 +186,6 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
     <div class="stat"><span class="stat-num" id="stat-avg">—</span><span class="stat-label">avg. stars</span></div>
   </div>
 </div>
-
-<!-- ── FILTER BAR ── -->
 <div class="filter-bar">
   <span class="filter-label">Filter</span>
   <button class="chip active" data-filter="all">全部</button>
@@ -229,12 +198,9 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
   <button class="chip" data-filter="animation">動畫</button>
   <button class="chip" data-filter="documentary">紀錄</button>
 </div>
-
 <div class="grid" id="grid"></div>
 
-<!-- ══════════════════════════════
-     ADD / EDIT MODAL
-     ══════════════════════════════ -->
+<!-- ADD / EDIT MODAL -->
 <div class="overlay" id="add-overlay">
   <div class="modal">
     <div class="modal-head">
@@ -263,12 +229,12 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
         </select>
       </div>
       <div class="fg"><label>我的評分（0 - 10）</label>
-  <div class="rating-wrap">
-    <input type="range" class="rating-slider" id="f-rating" min="0" max="10" step="0.5" value="0">
-    <input type="number" class="rating-num-input" id="f-rating-num" min="0" max="10" step="0.5" value="0">
-    <span class="rating-display" id="f-rating-label">★ 0.0</span>
-  </div>
-</div>
+        <div class="rating-wrap">
+          <input type="range" class="rating-slider" id="f-rating" min="0" max="10" step="0.5" value="0">
+          <input type="number" class="rating-num-input" id="f-rating-num" min="0" max="10" step="0.5" value="0">
+          <span class="rating-display" id="f-rating-label">★ 0.0</span>
+        </div>
+      </div>
       <div class="fg"><label>觀後感</label><textarea id="f-review" placeholder="Write your thoughts…"></textarea></div>
       <div class="fg">
         <label>照片（可新增 / 替換）</label>
@@ -277,9 +243,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
           <div class="photo-drop-icon">🎞</div>
           <p>Upload poster / stills — 可多選</p>
         </div>
-        <!-- existing photos (edit mode) -->
         <div id="existing-photos" style="margin-top:0.8rem"></div>
-        <!-- new photos preview -->
         <div class="photo-row" id="photo-preview"></div>
       </div>
       <button class="btn-primary" id="save-btn">Save Entry</button>
@@ -287,9 +251,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     DETAIL MODAL
-     ══════════════════════════════ -->
+<!-- DETAIL MODAL -->
 <div class="overlay" id="detail-overlay">
   <div class="modal" id="detail-inner">
     <div class="modal-head">
@@ -298,7 +260,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
     </div>
     <div id="d-cover"></div>
     <div class="modal-body" style="padding-top:0">
-      <div style="margin-bottom:1rem">
+      <div style="margin-bottom:1rem;margin-top:1.2rem">
         <div class="detail-stars" id="d-stars"></div>
         <div class="detail-stars-label" id="d-stars-label"></div>
       </div>
@@ -308,13 +270,16 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
         <button class="btn-sec" id="d-edit-btn">Edit</button>
         <button class="btn-danger" id="d-delete-btn">Delete</button>
       </div>
+      <div class="comments-section">
+        <div class="comments-title">留言 <span id="pending-badge"></span></div>
+        <div id="comments-list"></div>
+        <div id="comment-input-area"></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     AUTH MODAL (Login / Register)
-     ══════════════════════════════ -->
+<!-- AUTH MODAL -->
 <div class="overlay" id="auth-overlay" style="z-index:300">
   <div class="modal modal-sm">
     <div class="modal-head">
@@ -334,528 +299,303 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
   </div>
 </div>
 
-<!-- ── LOADING OVERLAY ── -->
 <div class="loading-overlay" id="loading-overlay">
   <div class="loading-box">
     <div class="spinner" style="width:28px;height:28px;border-width:3px"></div>
     <p id="loading-text">Loading…</p>
   </div>
 </div>
-
-<!-- ── TOAST ── -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ══════════════════════════════════════════════
-//  INIT SUPABASE
-// ══════════════════════════════════════════════
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const{createClient}=supabase;
+const sb=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const OWNER_EMAIL='fisher1010@gmail.com';
+const BUCKET='diary-photos';
+const GENRES={drama:'劇情',thriller:'驚悚',romance:'愛情',scifi:'科幻',animation:'動畫',documentary:'紀錄',action:'動作',horror:'恐怖',comedy:'喜劇'};
+let db=[],filter='all',editId=null,currentDetailId=null,newPhotos=[],removedPhotoUrls=[],currentUser=null;
 
-// ══════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════
-let db = [];
-let filter = 'all';
-let editId = null;
-let currentDetailId = null;
-let newPhotos = [];        // File objects waiting to upload
-let removedPhotoUrls = []; // existing URLs marked for deletion
-let currentUser = null;
+function showLoading(t='Loading…'){document.getElementById('loading-text').textContent=t;document.getElementById('loading-overlay').classList.add('show')}
+function hideLoading(){document.getElementById('loading-overlay').classList.remove('show')}
+function showToast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');clearTimeout(t._timer);t._timer=setTimeout(()=>t.classList.remove('show'),3000)}
+function closeOverlay(id){document.getElementById(id).classList.remove('open')}
+function openOverlay(id){document.getElementById(id).classList.add('open')}
+function starsHTML(n){if(!n)return'<span class="star">★ —</span>';return`<span class="star on">★ ${parseFloat(n).toFixed(1)}</span><span class="star" style="font-size:0.7rem;margin-left:2px">/ 10</span>`}
+function isOwner(){return currentUser?.email===OWNER_EMAIL}
 
-const GENRES = {drama:'劇情',thriller:'驚悚',romance:'愛情',scifi:'科幻',animation:'動畫',documentary:'紀錄',action:'動作',horror:'恐怖',comedy:'喜劇'};
-const BUCKET = 'diary-photos';
-
-// ══════════════════════════════════════════════
-//  UTILS
-// ══════════════════════════════════════════════
-function showLoading(text='Loading…') {
-  document.getElementById('loading-text').textContent = text;
-  document.getElementById('loading-overlay').classList.add('show');
-}
-function hideLoading() {
-  document.getElementById('loading-overlay').classList.remove('show');
-}
-function showToast(msg, type='') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show' + (type ? ' '+type : '');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 3000);
-}
-function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
-function openOverlay(id) { document.getElementById(id).classList.add('open'); }
-function starsHTML(n) {
-  if (!n) return '<span class="star">★ —</span>';
-  return `<span class="star on">★ ${parseFloat(n).toFixed(1)}</span><span class="star" style="font-size:0.7rem;margin-left:2px">/ 10</span>`;
-}
-
-// ══════════════════════════════════════════════
-//  AUTH
-// ══════════════════════════════════════════════
-sb.auth.onAuthStateChange(async (event, session) => {
-  currentUser = session?.user ?? null;
-  updateAuthUI();
-  if (currentUser) {
-    closeOverlay('auth-overlay');
-    await loadEntries();
-  } else {
-    await loadEntries();
-  }
+sb.auth.onAuthStateChange(async(event,session)=>{
+  currentUser=session?.user??null;updateAuthUI();
+  if(currentUser)closeOverlay('auth-overlay');
+  await loadEntries();
 });
 
-const OWNER_EMAIL = 'fisher1010@gmail.com';
-
-function updateAuthUI() {
-  const btn = document.getElementById('auth-btn');
-  const newBtn = document.getElementById('btn-new');
-  const isOwner = currentUser?.email === OWNER_EMAIL;
-  if (currentUser) {
-    btn.textContent = '🔓 登出';
-    btn.onclick = () => sb.auth.signOut();
-    newBtn.disabled = !isOwner;
-    newBtn.style.display = isOwner ? '' : 'none';
-  } else {
-    btn.textContent = '🔒 登入';
-    btn.onclick = () => openOverlay('auth-overlay');
-    newBtn.disabled = true;
-    newBtn.style.display = 'none';
-  }
+function updateAuthUI(){
+  const btn=document.getElementById('auth-btn');
+  const newBtn=document.getElementById('btn-new');
+  const owner=isOwner();
+  if(currentUser){btn.textContent='🔓 登出';btn.onclick=()=>sb.auth.signOut();newBtn.disabled=!owner;newBtn.style.display=owner?'':'none';}
+  else{btn.textContent='🔒 登入';btn.onclick=()=>openOverlay('auth-overlay');newBtn.disabled=true;newBtn.style.display='none';}
 }
 
-let authMode = 'login';
-function switchTab(mode) {
-  authMode = mode;
-  document.getElementById('tab-login').classList.toggle('active', mode==='login');
-  document.getElementById('tab-register').classList.toggle('active', mode==='register');
-  document.getElementById('auth-submit').textContent = mode==='login' ? '登入' : '註冊';
-  document.querySelector('#auth-overlay .modal-ttl').textContent = mode==='login' ? 'Welcome Back' : 'Create Account';
-  document.getElementById('auth-msg').className = 'auth-msg';
-  document.getElementById('auth-password').autocomplete = mode==='login' ? 'current-password' : 'new-password';
+let authMode='login';
+function switchTab(mode){
+  authMode=mode;
+  document.getElementById('tab-login').classList.toggle('active',mode==='login');
+  document.getElementById('tab-register').classList.toggle('active',mode==='register');
+  document.getElementById('auth-submit').textContent=mode==='login'?'登入':'註冊';
+  document.querySelector('#auth-overlay .modal-ttl').textContent=mode==='login'?'Welcome Back':'Create Account';
+  document.getElementById('auth-msg').className='auth-msg';
+  document.getElementById('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
 }
 
-document.getElementById('auth-submit').addEventListener('click', async () => {
-  const email = document.getElementById('auth-email').value.trim();
-  const password = document.getElementById('auth-password').value;
-  const msgEl = document.getElementById('auth-msg');
-  msgEl.className = 'auth-msg';
-  if (!email || !password) { msgEl.className='auth-msg error'; msgEl.textContent='請填寫 Email 與密碼'; return; }
-
-  const btn = document.getElementById('auth-submit');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>處理中…';
-
+document.getElementById('auth-submit').addEventListener('click',async()=>{
+  const email=document.getElementById('auth-email').value.trim();
+  const password=document.getElementById('auth-password').value;
+  const msgEl=document.getElementById('auth-msg');msgEl.className='auth-msg';
+  if(!email||!password){msgEl.className='auth-msg error';msgEl.textContent='請填寫 Email 與密碼';return}
+  const btn=document.getElementById('auth-submit');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>處理中…';
   let error;
-  if (authMode === 'login') {
-    ({ error } = await sb.auth.signInWithPassword({ email, password }));
-  } else {
-    ({ error } = await sb.auth.signUp({ email, password }));
-    if (!error) {
-      msgEl.className='auth-msg success';
-      msgEl.textContent='✓ 註冊成功！請確認 Email 後再登入';
-      btn.disabled = false; btn.textContent='註冊';
-      return;
-    }
-  }
-  if (error) {
-    msgEl.className='auth-msg error';
-    msgEl.textContent = error.message === 'Invalid login credentials' ? '帳號或密碼錯誤' : error.message;
-  }
-  btn.disabled = false;
-  btn.textContent = authMode==='login' ? '登入' : '註冊';
+  if(authMode==='login'){({error}=await sb.auth.signInWithPassword({email,password}));}
+  else{({error}=await sb.auth.signUp({email,password}));if(!error){msgEl.className='auth-msg success';msgEl.textContent='✓ 註冊成功！請登入';btn.disabled=false;btn.textContent='註冊';return}}
+  if(error){msgEl.className='auth-msg error';msgEl.textContent=error.message==='Invalid login credentials'?'帳號或密碼錯誤':error.message}
+  btn.disabled=false;btn.textContent=authMode==='login'?'登入':'註冊';
 });
+document.getElementById('auth-close').addEventListener('click',()=>closeOverlay('auth-overlay'));
+document.getElementById('auth-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('auth-password').focus()});
+document.getElementById('auth-password').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('auth-submit').click()});
 
-document.getElementById('auth-close').addEventListener('click', () => closeOverlay('auth-overlay'));
-document.getElementById('auth-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('auth-password').focus(); });
-document.getElementById('auth-password').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('auth-submit').click(); });
-
-// ══════════════════════════════════════════════
-//  DATA — LOAD
-// ══════════════════════════════════════════════
-async function loadEntries() {
+async function loadEntries(){
   showLoading('Loading diary…');
-  const { data, error } = await sb.from('entries')
-    .select('*')
-    .order('created_at', { ascending: false });
-  hideLoading();
-  if (error) { showToast('載入失敗：' + error.message, 'error'); return; }
-  db = data || [];
-  render();
+  const{data,error}=await sb.from('entries').select('*').order('created_at',{ascending:false});
+  hideLoading();if(error){showToast('載入失敗：'+error.message,'error');return}
+  db=data||[];render();
 }
 
-// ══════════════════════════════════════════════
-//  DATA — SAVE
-// ══════════════════════════════════════════════
-async function saveEntry() {
-  const titleVal = document.getElementById('f-title').value.trim();
-  if (!titleVal) { showToast('請輸入作品名稱', 'error'); return; }
-
-  const saveBtn = document.getElementById('save-btn');
-  saveBtn.disabled = true;
-  saveBtn.innerHTML = '<span class="spinner"></span>Saving…';
-
-  try {
-    // 1. 刪除被標記移除的舊照片
-    for (const url of removedPhotoUrls) {
-      const path = urlToStoragePath(url);
-      if (path) await sb.storage.from(BUCKET).remove([path]);
+async function saveEntry(){
+  const titleVal=document.getElementById('f-title').value.trim();
+  if(!titleVal){showToast('請輸入作品名稱','error');return}
+  const saveBtn=document.getElementById('save-btn');saveBtn.disabled=true;saveBtn.innerHTML='<span class="spinner"></span>Saving…';
+  try{
+    for(const url of removedPhotoUrls){const p=urlToStoragePath(url);if(p)await sb.storage.from(BUCKET).remove([p])}
+    const uploadedUrls=[];
+    for(const file of newPhotos){
+      const ext=file.name.split('.').pop();
+      const path=`${currentUser.id}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+      const{error:upErr}=await sb.storage.from(BUCKET).upload(path,file,{upsert:false});
+      if(upErr){showToast('圖片上傳失敗：'+upErr.message,'error');continue}
+      const{data:{publicUrl}}=sb.storage.from(BUCKET).getPublicUrl(path);uploadedUrls.push(publicUrl);
     }
-
-    // 2. 上傳新照片
-    const uploadedUrls = [];
-    for (const file of newPhotos) {
-      const ext = file.name.split('.').pop();
-      const path = `${currentUser.id}/${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error: upErr } = await sb.storage.from(BUCKET).upload(path, file, { upsert: false });
-      if (upErr) { showToast('圖片上傳失敗：' + upErr.message, 'error'); continue; }
-      const { data: { publicUrl } } = sb.storage.from(BUCKET).getPublicUrl(path);
-      uploadedUrls.push(publicUrl);
-    }
-
-    // 3. 組合最終照片清單（保留的舊URL + 新上傳URL）
-    const keepUrls = Array.from(document.querySelectorAll('#existing-photos .photo-thumb')).map(img => img.dataset.url);
-    const finalPhotos = [...keepUrls, ...uploadedUrls];
-
-    // 4. 寫入資料庫
-    const ratingVal = parseFloat(document.getElementById('f-rating').value) || 0;
-    const payload = {
-      user_id: currentUser.id,
-      title: titleVal,
-      original_title: document.getElementById('f-orig').value.trim(),
-      type: document.getElementById('f-type').value,
-      year: document.getElementById('f-year').value || null,
-      genre: document.getElementById('f-genre').value || null,
-      rating: ratingVal,
-      review: document.getElementById('f-review').value.trim(),
-      photos: finalPhotos,
-      updated_at: new Date().toISOString()
-    };
-
+    const keepUrls=Array.from(document.querySelectorAll('#existing-photos .photo-thumb')).map(img=>img.dataset.url);
+    const finalPhotos=[...keepUrls,...uploadedUrls];
+    const ratingVal=parseFloat(document.getElementById('f-rating').value)||0;
+    const payload={user_id:currentUser.id,title:titleVal,original_title:document.getElementById('f-orig').value.trim(),type:document.getElementById('f-type').value,year:document.getElementById('f-year').value||null,genre:document.getElementById('f-genre').value||null,rating:ratingVal,review:document.getElementById('f-review').value.trim(),photos:finalPhotos,updated_at:new Date().toISOString()};
     let error;
-    if (editId) {
-      ({ error } = await sb.from('entries').update(payload).eq('id', editId).eq('user_id', currentUser.id));
-    } else {
-      payload.created_at = new Date().toISOString();
-      ({ error } = await sb.from('entries').insert(payload));
-    }
-
-    if (error) throw error;
-
-    showToast(editId ? '✓ 更新成功' : '✓ 已記錄', 'success');
-    closeOverlay('add-overlay');
-    await loadEntries();
-
-  } catch(err) {
-    showToast('儲存失敗：' + err.message, 'error');
-  } finally {
-    saveBtn.disabled = false;
-    saveBtn.textContent = 'Save Entry';
-  }
+    if(editId){({error}=await sb.from('entries').update(payload).eq('id',editId).eq('user_id',currentUser.id));}
+    else{payload.created_at=new Date().toISOString();({error}=await sb.from('entries').insert(payload))}
+    if(error)throw error;
+    showToast(editId?'✓ 更新成功':'✓ 已記錄','success');closeOverlay('add-overlay');await loadEntries();
+  }catch(err){showToast('儲存失敗：'+err.message,'error')}
+  finally{saveBtn.disabled=false;saveBtn.textContent='Save Entry'}
 }
 
-// ══════════════════════════════════════════════
-//  DATA — DELETE
-// ══════════════════════════════════════════════
-async function deleteEntry(id) {
-  const entry = db.find(e => e.id === id);
-  if (!entry) return;
-  if (!confirm('確定要刪除這筆記錄嗎？')) return;
-
+async function deleteEntry(id){
+  const entry=db.find(e=>e.id===id);if(!entry)return;
+  if(!confirm('確定要刪除這筆記錄嗎？'))return;
   showLoading('Deleting…');
-  // 刪除所有照片
-  for (const url of (entry.photos || [])) {
-    const path = urlToStoragePath(url);
-    if (path) await sb.storage.from(BUCKET).remove([path]);
-  }
-  const { error } = await sb.from('entries').delete().eq('id', id).eq('user_id', currentUser.id);
-  hideLoading();
-  if (error) { showToast('刪除失敗', 'error'); return; }
-  showToast('已刪除', 'success');
-  closeOverlay('detail-overlay');
-  await loadEntries();
+  for(const url of(entry.photos||[])){const p=urlToStoragePath(url);if(p)await sb.storage.from(BUCKET).remove([p])}
+  const{error}=await sb.from('entries').delete().eq('id',id).eq('user_id',currentUser.id);
+  hideLoading();if(error){showToast('刪除失敗','error');return}
+  showToast('已刪除','success');closeOverlay('detail-overlay');await loadEntries();
 }
 
-// ══════════════════════════════════════════════
-//  STORAGE HELPER
-// ══════════════════════════════════════════════
-function urlToStoragePath(url) {
-  // Extract path after /object/public/BUCKET/
-  try {
-    const marker = `/object/public/${BUCKET}/`;
-    const idx = url.indexOf(marker);
-    if (idx === -1) return null;
-    return decodeURIComponent(url.slice(idx + marker.length));
-  } catch { return null; }
+function urlToStoragePath(url){
+  try{const marker=`/object/public/${BUCKET}/`;const idx=url.indexOf(marker);if(idx===-1)return null;return decodeURIComponent(url.slice(idx+marker.length))}catch{return null}
 }
 
-// ══════════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════════
-function getFiltered() {
-  if (filter === 'all') return db;
-  if (filter === 'movie' || filter === 'series') return db.filter(e => e.type === filter);
-  return db.filter(e => e.genre === filter);
+function getFiltered(){
+  if(filter==='all')return db;
+  if(filter==='movie'||filter==='series')return db.filter(e=>e.type===filter);
+  return db.filter(e=>e.genre===filter);
 }
 
-function render(list) {
-  if (!list) list = getFiltered();
-  document.getElementById('stat-total').textContent = db.length;
-  document.getElementById('stat-avg').textContent = db.length
-    ? (db.reduce((a,b) => a+(b.rating||0), 0)/db.length).toFixed(1) : '—';
-
-  const g = document.getElementById('grid');
-  if (!list.length) {
-    g.innerHTML = `<div class="empty">
-      <div class="empty-icon">🎬</div>
-      <h3>${currentUser ? 'No entries yet' : 'Please sign in'}</h3>
-      <p>${currentUser ? 'Click "New Entry" to start your cinema diary' : 'Click 🔒 登入 in the top right'}</p>
-    </div>`;
-    return;
-  }
-  g.innerHTML = '';
-  list.forEach((e, i) => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.style.animation = `fadeUp 0.45s ease ${i*0.055}s both`;
-    div.dataset.id = e.id;
-
-    const imgWrap = document.createElement('div');
-    imgWrap.className = 'card-img-wrap';
-    if (e.photos && e.photos[0]) {
-      const img = document.createElement('img');
-      img.className = 'card-img'; img.src = e.photos[0]; img.alt = '';
-      imgWrap.appendChild(img);
-    } else {
-      imgWrap.innerHTML = `<div class="card-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg><span>no cover</span></div>`;
-    }
-    const badge = document.createElement('span');
-    badge.className = 'card-badge';
-    badge.textContent = e.type === 'movie' ? 'Film' : 'Series';
-    imgWrap.appendChild(badge);
-
-    const body = document.createElement('div');
-    body.className = 'card-body';
-    body.innerHTML = `<div class="card-title">${e.title}</div>
-      <div class="card-meta">${e.original_title||''}${e.year?' · '+e.year:''}</div>
-      <div class="stars">${starsHTML(e.rating)}</div>
-      ${e.review ? `<div class="card-excerpt">${e.review}</div>` : ''}
-      ${e.genre ? `<span class="card-genre">${GENRES[e.genre]||e.genre}</span>` : ''}`;
-
-    div.appendChild(imgWrap);
-    div.appendChild(body);
-    div.addEventListener('click', () => openDetail(e.id));
-    g.appendChild(div);
+function render(list){
+  if(!list)list=getFiltered();
+  document.getElementById('stat-total').textContent=db.length;
+  document.getElementById('stat-avg').textContent=db.length?(db.reduce((a,b)=>a+(b.rating||0),0)/db.length).toFixed(1):'—';
+  const g=document.getElementById('grid');
+  if(!list.length){g.innerHTML='<div class="empty"><div class="empty-icon">🎬</div><h3>No entries yet</h3><p>Cinema diary is empty</p></div>';return}
+  g.innerHTML='';
+  list.forEach((e,i)=>{
+    const div=document.createElement('div');div.className='card';div.style.animation=`fadeUp 0.45s ease ${i*0.055}s both`;div.dataset.id=e.id;
+    const imgWrap=document.createElement('div');imgWrap.className='card-img-wrap';
+    if(e.photos&&e.photos[0]){const img=document.createElement('img');img.className='card-img';img.src=e.photos[0];img.alt='';imgWrap.appendChild(img)}
+    else{imgWrap.innerHTML='<div class="card-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M6 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg><span>no cover</span></div>'}
+    const badge=document.createElement('span');badge.className='card-badge';badge.textContent=e.type==='movie'?'Film':'Series';imgWrap.appendChild(badge);
+    const body=document.createElement('div');body.className='card-body';
+    body.innerHTML=`<div class="card-title">${e.title}</div><div class="card-meta">${e.original_title||''}${e.year?' · '+e.year:''}</div><div class="stars">${starsHTML(e.rating)}</div>${e.review?`<div class="card-excerpt">${e.review}</div>`:''}${e.genre?`<span class="card-genre">${GENRES[e.genre]||e.genre}</span>`:''}`;
+    div.appendChild(imgWrap);div.appendChild(body);div.addEventListener('click',()=>openDetail(e.id));g.appendChild(div);
   });
 }
 
-// ══════════════════════════════════════════════
-//  FILTER
-// ══════════════════════════════════════════════
-document.querySelector('.filter-bar').addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if (!chip) return;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  filter = chip.dataset.filter;
-  render();
+document.querySelector('.filter-bar').addEventListener('click',e=>{
+  const chip=e.target.closest('.chip');if(!chip)return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');filter=chip.dataset.filter;render();
 });
-function doFilter(val) {
-  filter = val;
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.filter===val));
-  render();
-}
-function doFilterRating(min) {
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  render(db.filter(e => e.rating >= min));
-}
+function doFilter(val){filter=val;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c.dataset.filter===val));render()}
+function doFilterRating(min){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));render(db.filter(e=>e.rating>=min))}
 
-// ══════════════════════════════════════════════
-//  ADD MODAL
-// ══════════════════════════════════════════════
-document.getElementById('btn-new').addEventListener('click', () => {
-  if (!currentUser) { openOverlay('auth-overlay'); return; }
-  showAddModal();
-});
+document.getElementById('btn-new').addEventListener('click',()=>{if(!currentUser){openOverlay('auth-overlay');return}showAddModal()});
 
-function showAddModal() {
-  editId = null; newPhotos = []; removedPhotoUrls = [];
-  document.getElementById('add-title').textContent = '新增記錄';
-  document.getElementById('f-id').value = '';
-  document.getElementById('f-title').value = '';
-  document.getElementById('f-orig').value = '';
-  document.getElementById('f-year').value = '';
-  document.getElementById('f-review').value = '';
-  document.getElementById('f-genre').value = '';
-  document.getElementById('f-type').value = 'movie';
-  syncRating(0);
-  document.getElementById('photo-preview').innerHTML = '';
-  document.getElementById('existing-photos').innerHTML = '';
-  document.getElementById('f-photos').value = '';
-  openOverlay('add-overlay');
+function showAddModal(){
+  editId=null;newPhotos=[];removedPhotoUrls=[];
+  document.getElementById('add-title').textContent='新增記錄';
+  ['f-id','f-title','f-orig','f-year','f-review'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-genre').value='';document.getElementById('f-type').value='movie';syncRating(0);
+  document.getElementById('photo-preview').innerHTML='';document.getElementById('existing-photos').innerHTML='';
+  document.getElementById('f-photos').value='';openOverlay('add-overlay');
 }
 
-document.getElementById('add-close').addEventListener('click', () => closeOverlay('add-overlay'));
-document.getElementById('add-overlay').addEventListener('click', e => { if(e.target===document.getElementById('add-overlay')) closeOverlay('add-overlay'); });
+document.getElementById('add-close').addEventListener('click',()=>closeOverlay('add-overlay'));
+document.getElementById('add-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('add-overlay'))closeOverlay('add-overlay')});
 
-// ── PHOTO HANDLING ──
-document.getElementById('f-photos').addEventListener('change', e => {
-  Array.from(e.target.files).forEach(file => {
-    newPhotos.push(file);
-    const url = URL.createObjectURL(file);
-    const wrap = document.createElement('div');
-    wrap.className = 'photo-thumb-wrap';
-    const img = document.createElement('img');
-    img.src = url; img.className = 'photo-thumb';
-    const rm = document.createElement('button');
-    rm.className = 'photo-remove'; rm.textContent = '×';
-    rm.addEventListener('click', () => {
-      newPhotos = newPhotos.filter(f => f !== file);
-      wrap.remove();
-    });
-    wrap.appendChild(img); wrap.appendChild(rm);
-    document.getElementById('photo-preview').appendChild(wrap);
-  });
-  e.target.value = '';
+document.getElementById('f-photos').addEventListener('change',e=>{
+  Array.from(e.target.files).forEach(file=>{
+    newPhotos.push(file);const url=URL.createObjectURL(file);
+    const wrap=document.createElement('div');wrap.className='photo-thumb-wrap';
+    const img=document.createElement('img');img.src=url;img.className='photo-thumb';
+    const rm=document.createElement('button');rm.className='photo-remove';rm.textContent='×';
+    rm.addEventListener('click',()=>{newPhotos=newPhotos.filter(f=>f!==file);wrap.remove()});
+    wrap.appendChild(img);wrap.appendChild(rm);document.getElementById('photo-preview').appendChild(wrap);
+  });e.target.value='';
 });
 
-function renderExistingPhotos(photos) {
-  const container = document.getElementById('existing-photos');
-  container.innerHTML = '';
-  if (!photos || !photos.length) return;
-  const label = document.createElement('div');
-  label.style.cssText = 'font-family:Courier Prime,monospace;font-size:0.58rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.4rem';
-  label.textContent = '現有照片（點 × 移除）';
-  container.appendChild(label);
-  const row = document.createElement('div');
-  row.className = 'photo-row';
-  photos.forEach(url => {
-    const wrap = document.createElement('div');
-    wrap.className = 'photo-thumb-wrap';
-    const img = document.createElement('img');
-    img.src = url; img.className = 'photo-thumb'; img.dataset.url = url;
-    const rm = document.createElement('button');
-    rm.className = 'photo-remove'; rm.textContent = '×';
-    rm.addEventListener('click', () => {
-      removedPhotoUrls.push(url);
-      wrap.remove();
-    });
-    wrap.appendChild(img); wrap.appendChild(rm);
-    row.appendChild(wrap);
-  });
-  container.appendChild(row);
+function renderExistingPhotos(photos){
+  const container=document.getElementById('existing-photos');container.innerHTML='';
+  if(!photos||!photos.length)return;
+  const label=document.createElement('div');
+  label.style.cssText='font-family:Courier Prime,monospace;font-size:0.58rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.4rem';
+  label.textContent='現有照片（點 × 移除）';container.appendChild(label);
+  const row=document.createElement('div');row.className='photo-row';
+  photos.forEach(url=>{
+    const wrap=document.createElement('div');wrap.className='photo-thumb-wrap';
+    const img=document.createElement('img');img.src=url;img.className='photo-thumb';img.dataset.url=url;
+    const rm=document.createElement('button');rm.className='photo-remove';rm.textContent='×';
+    rm.addEventListener('click',()=>{removedPhotoUrls.push(url);wrap.remove()});
+    wrap.appendChild(img);wrap.appendChild(rm);row.appendChild(wrap);
+  });container.appendChild(row);
 }
-// ── RATING SYNC ──
-const slider = document.getElementById('f-rating');
-const numInput = document.getElementById('f-rating-num');
-const ratingLabel = document.getElementById('f-rating-label');
-function syncRating(val) {
-  val = Math.min(10, Math.max(0, parseFloat(val)||0));
-  val = Math.round(val*2)/2;
-  slider.value = val;
-  numInput.value = val;
-  ratingLabel.textContent = '★ ' + val.toFixed(1);
-}
-slider.addEventListener('input', () => syncRating(slider.value));
-numInput.addEventListener('input', () => syncRating(numInput.value));
-document.getElementById('save-btn').addEventListener('click', saveEntry);
 
-// ══════════════════════════════════════════════
-//  DETAIL MODAL
-// ══════════════════════════════════════════════
-function openDetail(id) {
-  const e = db.find(x => x.id === id);
-  if (!e) return;
-  currentDetailId = id;
+const slider=document.getElementById('f-rating');
+const numInput=document.getElementById('f-rating-num');
+const ratingLabel=document.getElementById('f-rating-label');
+function syncRating(val){val=Math.min(10,Math.max(0,parseFloat(val)||0));val=Math.round(val*2)/2;slider.value=val;numInput.value=val;ratingLabel.textContent='★ '+val.toFixed(1)}
+slider.addEventListener('input',()=>syncRating(slider.value));
+numInput.addEventListener('input',()=>syncRating(numInput.value));
+document.getElementById('save-btn').addEventListener('click',saveEntry);
 
-  document.getElementById('d-title').textContent = e.title;
-  document.getElementById('d-sub').textContent =
-    (e.original_title||'') + (e.year?' · '+e.year:'') + ' · ' + (e.type==='movie'?'Film':'Series') + (e.genre?' · '+(GENRES[e.genre]||e.genre):'');
-
-  const coverEl = document.getElementById('d-cover');
-  if (e.photos && e.photos[0]) {
-    coverEl.innerHTML = '';
-    const img = document.createElement('img');
-    img.className = 'detail-cover'; img.src = e.photos[0]; img.alt = '';
-    coverEl.appendChild(img);
-  } else {
-    coverEl.innerHTML = '<div class="detail-cover-empty">🎬</div>';
+async function openDetail(id){
+  const e=db.find(x=>x.id===id);if(!e)return;currentDetailId=id;
+  document.getElementById('d-title').textContent=e.title;
+  document.getElementById('d-sub').textContent=(e.original_title||'')+(e.year?' · '+e.year:'')+' · '+(e.type==='movie'?'Film':'Series')+(e.genre?' · '+(GENRES[e.genre]||e.genre):'');
+  const coverEl=document.getElementById('d-cover');
+  if(e.photos&&e.photos[0]){coverEl.innerHTML='';const img=document.createElement('img');img.className='detail-cover';img.src=e.photos[0];img.alt='';coverEl.appendChild(img)}
+  else{coverEl.innerHTML='<div class="detail-cover-empty">🎬</div>'}
+  document.getElementById('d-stars').textContent=e.rating?`★ ${parseFloat(e.rating).toFixed(1)} / 10`:'Not rated';
+  document.getElementById('d-stars-label').textContent=e.rating?'my rating':'No rating yet';
+  const reviewEl=document.getElementById('d-review');
+  if(e.review){reviewEl.className='detail-review';reviewEl.innerHTML=e.review.replace(/\n/g,'<br>')}
+  else{reviewEl.className='';reviewEl.innerHTML="<p style=\"color:var(--text-dim);font-size:0.88rem;font-style:italic;font-family:'Cormorant Garamond',serif\">No review written yet.</p>"}
+  const photosEl=document.getElementById('d-photos');photosEl.innerHTML='';
+  if(e.photos&&e.photos.length){
+    const label=document.createElement('div');label.className='modal-sub';label.style.cssText='margin-bottom:0.5rem;margin-top:1rem';label.textContent='Photos';
+    const row=document.createElement('div');row.className='detail-photos';
+    e.photos.forEach(p=>{const thumb=document.createElement('img');thumb.className='detail-photo';thumb.src=p;thumb.addEventListener('click',()=>window.open(p,'_blank'));row.appendChild(thumb)});
+    photosEl.appendChild(label);photosEl.appendChild(row);
   }
-
-  document.getElementById('d-stars').textContent = e.rating
-    ? '★'.repeat(e.rating)+'☆'.repeat(5-e.rating) : 'Not rated';
-  document.getElementById('d-stars-label').textContent = e.rating
-    ? e.rating+' / 5 stars' : 'No rating yet';
-
-  const reviewEl = document.getElementById('d-review');
-  if (e.review) {
-    reviewEl.className = 'detail-review';
-    reviewEl.innerHTML = e.review.replace(/\n/g,'<br>');
-  } else {
-    reviewEl.className = '';
-    reviewEl.innerHTML = `<p style="color:var(--text-dim);font-size:0.88rem;font-style:italic;font-family:'Cormorant Garamond',serif">No review written yet.</p>`;
-  }
-
-  const photosEl = document.getElementById('d-photos');
-  photosEl.innerHTML = '';
-  if (e.photos && e.photos.length) {
-    const label = document.createElement('div');
-    label.className = 'modal-sub'; label.style.cssText = 'margin-bottom:0.5rem;margin-top:1rem';
-    label.textContent = 'Photos';
-    const row = document.createElement('div');
-    row.className = 'detail-photos';
-    e.photos.forEach(p => {
-      const thumb = document.createElement('img');
-      thumb.className = 'detail-photo'; thumb.src = p;
-      thumb.addEventListener('click', () => window.open(p, '_blank'));
-      row.appendChild(thumb);
-    });
-    photosEl.appendChild(label); photosEl.appendChild(row);
-  }
-  const isOwner = currentUser?.email === OWNER_EMAIL;
-  document.getElementById('d-edit-btn').style.display = isOwner ? '' : 'none';
-  document.getElementById('d-delete-btn').style.display = isOwner ? '' : 'none';
+  const owner=isOwner();
+  document.getElementById('d-edit-btn').style.display=owner?'':'none';
+  document.getElementById('d-delete-btn').style.display=owner?'':'none';
   openOverlay('detail-overlay');
+  await loadComments(id);
 }
 
-document.getElementById('detail-close').addEventListener('click', () => closeOverlay('detail-overlay'));
-document.getElementById('detail-overlay').addEventListener('click', e => { if(e.target===document.getElementById('detail-overlay')) closeOverlay('detail-overlay'); });
+document.getElementById('detail-close').addEventListener('click',()=>closeOverlay('detail-overlay'));
+document.getElementById('detail-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('detail-overlay'))closeOverlay('detail-overlay')});
 
-document.getElementById('d-edit-btn').addEventListener('click', () => {
-  const e = db.find(x => x.id === currentDetailId);
-  if (!e) return;
-  closeOverlay('detail-overlay');
-  editId = currentDetailId;
-  newPhotos = []; removedPhotoUrls = [];
-
-  document.getElementById('add-title').textContent = '編輯記錄';
-  document.getElementById('f-id').value = e.id;
-  document.getElementById('f-title').value = e.title;
-  document.getElementById('f-orig').value = e.original_title||'';
-  document.getElementById('f-year').value = e.year||'';
-  document.getElementById('f-review').value = e.review||'';
-  document.getElementById('f-genre').value = e.genre||'';
-  document.getElementById('f-type').value = e.type||'movie';
-  syncRating(e.rating || 0);
-  document.getElementById('photo-preview').innerHTML = '';
-  document.getElementById('f-photos').value = '';
-  renderExistingPhotos(e.photos || []);
-  openOverlay('add-overlay');
+document.getElementById('d-edit-btn').addEventListener('click',()=>{
+  const e=db.find(x=>x.id===currentDetailId);if(!e)return;
+  closeOverlay('detail-overlay');editId=currentDetailId;newPhotos=[];removedPhotoUrls=[];
+  document.getElementById('add-title').textContent='編輯記錄';
+  document.getElementById('f-id').value=e.id;document.getElementById('f-title').value=e.title;
+  document.getElementById('f-orig').value=e.original_title||'';document.getElementById('f-year').value=e.year||'';
+  document.getElementById('f-review').value=e.review||'';document.getElementById('f-genre').value=e.genre||'';
+  document.getElementById('f-type').value=e.type||'movie';syncRating(e.rating||0);
+  document.getElementById('photo-preview').innerHTML='';document.getElementById('f-photos').value='';
+  renderExistingPhotos(e.photos||[]);openOverlay('add-overlay');
 });
+document.getElementById('d-delete-btn').addEventListener('click',()=>{closeOverlay('detail-overlay');setTimeout(()=>deleteEntry(currentDetailId),150)});
 
-document.getElementById('d-delete-btn').addEventListener('click', () => {
-  closeOverlay('detail-overlay');
-  setTimeout(() => deleteEntry(currentDetailId), 150);
-});
+// ── COMMENTS ──
+async function loadComments(entryId){
+  const listEl=document.getElementById('comments-list');
+  const inputEl=document.getElementById('comment-input-area');
+  const badgeEl=document.getElementById('pending-badge');
+  listEl.innerHTML='<p style="font-family:\'Courier Prime\',monospace;font-size:0.6rem;color:var(--text-dim)">載入中…</p>';
+  inputEl.innerHTML='';badgeEl.innerHTML='';
 
-// ══════════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════════
-(async () => {
-  const { data: { session } } = await sb.auth.getSession();
-  currentUser = session?.user ?? null;
-  updateAuthUI();
-  await loadEntries();
-  
+  const{data:approved}=await sb.from('comments').select('*').eq('entry_id',entryId).eq('approved',true).order('created_at',{ascending:true});
+  let pending=[];
+  if(isOwner()){
+    const{data:p}=await sb.from('comments').select('*').eq('entry_id',entryId).eq('approved',false).order('created_at',{ascending:true});
+    pending=p||[];
+    if(pending.length>0)badgeEl.innerHTML=`<span class="pending-count">${pending.length} 待審核</span>`;
+  }
+
+  listEl.innerHTML='';
+  const allComments=[...(approved||[]),...pending];
+  if(!allComments.length){
+    listEl.innerHTML='<p style="font-family:\'Courier Prime\',monospace;font-size:0.6rem;color:var(--text-dim);opacity:0.5;padding:0.5rem 0">還沒有留言</p>';
+  } else {
+    allComments.forEach(c=>{
+      const item=document.createElement('div');item.className='comment-item';
+      const isPending=!c.approved;
+      const date=new Date(c.created_at).toLocaleDateString('zh-TW',{year:'numeric',month:'short',day:'numeric'});
+      item.innerHTML=`<div class="comment-header"><span class="comment-email">${c.user_email}${isPending?' <span class="comment-pending-badge">待審核</span>':''}</span><span class="comment-date">${date}</span></div><div class="comment-text">${c.content.replace(/\n/g,'<br>')}</div>`;
+      if(isOwner()){
+        const actions=document.createElement('div');actions.className='comment-actions';
+        if(isPending){
+          const approveBtn=document.createElement('button');approveBtn.className='comment-approve';approveBtn.textContent='✓ 核准';
+          approveBtn.addEventListener('click',async()=>{await sb.from('comments').update({approved:true}).eq('id',c.id);showToast('已核准','success');await loadComments(entryId)});
+          actions.appendChild(approveBtn);
+        }
+        const delBtn=document.createElement('button');delBtn.className='comment-reject';delBtn.textContent='✕ 刪除';
+        delBtn.addEventListener('click',async()=>{await sb.from('comments').delete().eq('id',c.id);showToast('已刪除','success');await loadComments(entryId)});
+        actions.appendChild(delBtn);item.appendChild(actions);
+      }
+      listEl.appendChild(item);
+    });
+  }
+
+  if(currentUser&&!isOwner()){
+    inputEl.innerHTML='<div class="comment-input-wrap"><textarea id="new-comment-text" placeholder="留下你的想法…"></textarea><button class="comment-submit" id="comment-submit-btn">送出留言</button></div>';
+    document.getElementById('comment-submit-btn').addEventListener('click',async()=>{
+      const text=document.getElementById('new-comment-text').value.trim();
+      if(!text){showToast('請輸入留言內容','error');return}
+      const btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='送出中…';
+      const{error}=await sb.from('comments').insert({entry_id:entryId,user_id:currentUser.id,user_email:currentUser.email,content:text,approved:false});
+      if(error){showToast('送出失敗：'+error.message,'error')}
+      else{showToast('✓ 留言已送出，等待審核','success');document.getElementById('new-comment-text').value=''}
+      btn.disabled=false;btn.textContent='送出留言';await loadComments(entryId);
+    });
+  } else if(!currentUser){
+    inputEl.innerHTML='<p class="comment-login-hint">想留言嗎？<a onclick="closeOverlay(\'detail-overlay\');openOverlay(\'auth-overlay\')">登入</a>即可參與討論</p>';
+  }
+}
+
+(async()=>{
+  const{data:{session}}=await sb.auth.getSession();
+  currentUser=session?.user??null;updateAuthUI();await loadEntries();
 })();
 </script>
 </body>
