@@ -100,6 +100,13 @@ select option{background:var(--surface)}
 textarea{resize:vertical;min-height:90px;line-height:1.65}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 .star-pick{display:flex;gap:4px;flex-direction:row-reverse;justify-content:flex-end}
+/* ── RATING SLIDER ── */
+.rating-wrap{display:flex;align-items:center;gap:0.8rem}
+.rating-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
+.rating-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--pink-deep);cursor:pointer;transition:background 0.2s,transform 0.15s}
+.rating-slider::-webkit-slider-thumb:hover{background:var(--pink);transform:scale(1.2)}
+.rating-num-input{width:58px;text-align:center;padding:0.4rem 0.4rem;font-family:'Cormorant Garamond',serif;font-size:1.1rem}
+.rating-display{font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--pink);white-space:nowrap}
 .star-pick input{display:none}
 .star-pick label{font-size:1.55rem;color:var(--border);cursor:pointer;transition:color 0.15s;line-height:1}
 .star-pick label:hover,.star-pick label:hover~label,.star-pick input:checked~label{color:var(--pink)}
@@ -255,15 +262,13 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
           <option value="action">動作</option><option value="horror">恐怖</option><option value="comedy">喜劇</option>
         </select>
       </div>
-      <div class="fg"><label>我的評分</label>
-        <div class="star-pick">
-          <input type="radio" name="r" id="r5" value="5"><label for="r5">★</label>
-          <input type="radio" name="r" id="r4" value="4"><label for="r4">★</label>
-          <input type="radio" name="r" id="r3" value="3"><label for="r3">★</label>
-          <input type="radio" name="r" id="r2" value="2"><label for="r2">★</label>
-          <input type="radio" name="r" id="r1" value="1"><label for="r1">★</label>
-        </div>
-      </div>
+      <div class="fg"><label>我的評分（0 - 10）</label>
+  <div class="rating-wrap">
+    <input type="range" class="rating-slider" id="f-rating" min="0" max="10" step="0.5" value="0">
+    <input type="number" class="rating-num-input" id="f-rating-num" min="0" max="10" step="0.5" value="0">
+    <span class="rating-display" id="f-rating-label">★ 0.0</span>
+  </div>
+</div>
       <div class="fg"><label>觀後感</label><textarea id="f-review" placeholder="Write your thoughts…"></textarea></div>
       <div class="fg">
         <label>照片（可新增 / 替換）</label>
@@ -381,9 +386,8 @@ function showToast(msg, type='') {
 function closeOverlay(id) { document.getElementById(id).classList.remove('open'); }
 function openOverlay(id) { document.getElementById(id).classList.add('open'); }
 function starsHTML(n) {
-  let s = '';
-  for (let i=1;i<=5;i++) s += `<span class="star${i<=n?' on':''}">★</span>`;
-  return s;
+  if (!n) return '<span class="star">★ —</span>';
+  return `<span class="star on">★ ${parseFloat(n).toFixed(1)}</span><span class="star" style="font-size:0.7rem;margin-left:2px">/ 10</span>`;
 }
 
 // ══════════════════════════════════════════════
@@ -508,7 +512,7 @@ async function saveEntry() {
     const finalPhotos = [...keepUrls, ...uploadedUrls];
 
     // 4. 寫入資料庫
-    const rEl = document.querySelector('input[name="r"]:checked');
+    const ratingVal = parseFloat(document.getElementById('f-rating').value) || 0;
     const payload = {
       user_id: currentUser.id,
       title: titleVal,
@@ -516,7 +520,7 @@ async function saveEntry() {
       type: document.getElementById('f-type').value,
       year: document.getElementById('f-year').value || null,
       genre: document.getElementById('f-genre').value || null,
-      rating: rEl ? parseInt(rEl.value) : 0,
+      rating: ratingVal,
       review: document.getElementById('f-review').value.trim(),
       photos: finalPhotos,
       updated_at: new Date().toISOString()
@@ -678,7 +682,7 @@ function showAddModal() {
   document.getElementById('f-review').value = '';
   document.getElementById('f-genre').value = '';
   document.getElementById('f-type').value = 'movie';
-  document.querySelectorAll('input[name="r"]').forEach(r => r.checked = false);
+  syncRating(0);
   document.getElementById('photo-preview').innerHTML = '';
   document.getElementById('existing-photos').innerHTML = '';
   document.getElementById('f-photos').value = '';
@@ -735,7 +739,19 @@ function renderExistingPhotos(photos) {
   });
   container.appendChild(row);
 }
-
+// ── RATING SYNC ──
+const slider = document.getElementById('f-rating');
+const numInput = document.getElementById('f-rating-num');
+const ratingLabel = document.getElementById('f-rating-label');
+function syncRating(val) {
+  val = Math.min(10, Math.max(0, parseFloat(val)||0));
+  val = Math.round(val*2)/2;
+  slider.value = val;
+  numInput.value = val;
+  ratingLabel.textContent = '★ ' + val.toFixed(1);
+}
+slider.addEventListener('input', () => syncRating(slider.value));
+numInput.addEventListener('input', () => syncRating(numInput.value));
 document.getElementById('save-btn').addEventListener('click', saveEntry);
 
 // ══════════════════════════════════════════════
@@ -811,7 +827,7 @@ document.getElementById('d-edit-btn').addEventListener('click', () => {
   document.getElementById('f-review').value = e.review||'';
   document.getElementById('f-genre').value = e.genre||'';
   document.getElementById('f-type').value = e.type||'movie';
-  document.querySelectorAll('input[name="r"]').forEach(r => r.checked = parseInt(r.value)===e.rating);
+  syncRating(e.rating || 0);
   document.getElementById('photo-preview').innerHTML = '';
   document.getElementById('f-photos').value = '';
   renderExistingPhotos(e.photos || []);
