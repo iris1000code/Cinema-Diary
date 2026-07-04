@@ -404,17 +404,22 @@ sb.auth.onAuthStateChange(async (event, session) => {
   }
 });
 
+const OWNER_EMAIL = 'fisher1010@gmail.com';
+
 function updateAuthUI() {
   const btn = document.getElementById('auth-btn');
   const newBtn = document.getElementById('btn-new');
+  const isOwner = currentUser?.email === OWNER_EMAIL;
   if (currentUser) {
     btn.textContent = '🔓 登出';
     btn.onclick = () => sb.auth.signOut();
-    newBtn.disabled = false;
+    newBtn.disabled = !isOwner;
+    newBtn.style.display = isOwner ? '' : 'none';
   } else {
     btn.textContent = '🔒 登入';
     btn.onclick = () => openOverlay('auth-overlay');
     newBtn.disabled = true;
+    newBtn.style.display = 'none';
   }
 }
 
@@ -806,6 +811,9 @@ function openDetail(id) {
     });
     photosEl.appendChild(label); photosEl.appendChild(row);
   }
+  const isOwner = currentUser?.email === OWNER_EMAIL;
+  document.getElementById('d-edit-btn').style.display = isOwner ? '' : 'none';
+  document.getElementById('d-delete-btn').style.display = isOwner ? '' : 'none';
   openOverlay('detail-overlay');
 }
 
