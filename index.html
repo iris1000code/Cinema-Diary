@@ -241,7 +241,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 <div class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow">Personal Cinema Journal</div>
-    <div class="hero-tagline">Every film<br>a <em>memory</em></div>
+    <div class="hero-tagline"><em>"In case I don't see ya,</em><br>good afternoon, good evening,<br>and good night."</div>
   </div>
   <div class="hero-right">
     <div class="stat-block" id="stat-block" onclick="toggleStat()" title="點擊切換顯示">
@@ -443,6 +443,7 @@ function updateAuthUI(){
   const owner=isOwner();
   if(currentUser){btn.textContent='🔓 登出';btn.onclick=()=>sb.auth.signOut();newBtn.disabled=!owner;newBtn.style.display=owner?'':'none';}
   else{btn.textContent='🔒 登入';btn.onclick=()=>openOverlay('auth-overlay');newBtn.disabled=true;newBtn.style.display='none';}
+  document.getElementById('stat-block').style.display=owner?'':'none';
 }
 
 let authMode='login';
@@ -632,7 +633,7 @@ async function openDetail(id){
   if(e.photos&&e.photos[0]){coverEl.innerHTML='';const img=document.createElement('img');img.className='detail-cover';img.src=e.photos[0];img.alt='';coverEl.appendChild(img)}
   else{coverEl.innerHTML='<div class="detail-cover-empty">🎬</div>'}
   document.getElementById('d-stars').textContent=e.rating?`★ ${parseFloat(e.rating).toFixed(1)} / 10`:'Not rated';
-  document.getElementById('d-stars-label').textContent=e.rating?'my rating':'No rating yet';
+  document.getElementById('d-stars-label').textContent='';
 
   // genres
   const genresEl=document.getElementById('d-genres');
