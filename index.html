@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cinema Diary</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&family=Courier+Prime:ital@0;1&display=swap" rel="stylesheet">
 <script>
   const SUPABASE_URL = 'https://syaujdxsefeipksfvuxj.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5YXVqZHhzZWZlaXBrc2Z2dXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3NDgzOTEsImV4cCI6MjA5ODMyNDM5MX0.ZC2UCq3C5nC7KxXg6Eijl9yvfWb0nexDbLAUoczGJm8';
@@ -18,7 +18,7 @@ body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-he
 /* ── HEADER ── */
 header{position:sticky;top:0;z-index:100;background:rgba(26,24,24,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--border-soft);padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:60px}
 .logo{display:flex;align-items:baseline;gap:0.5rem}
-.logo-main{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.4rem;color:var(--text);letter-spacing:0.03em}
+.logo-main{font-family:'Lora',serif;font-weight:300;font-style:italic;font-size:1.4rem;color:var(--text);letter-spacing:0.03em}
 .logo-main em{color:var(--pink);font-style:italic}
 .logo-dot{color:var(--text-dim);font-size:0.8rem;margin:0 0.1rem}
 .logo-sub{font-family:'Courier Prime',monospace;font-size:0.52rem;color:var(--text-dim);letter-spacing:0.3em;text-transform:uppercase;align-self:center}
@@ -36,12 +36,12 @@ nav button:hover{color:var(--pink-pale)}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--pink-deep),transparent);opacity:0.3}
 .hero-left{}
 .hero-eyebrow{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.28em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.7rem}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;color:var(--text)}
+.hero-tagline{font-family:'Lora',serif;font-weight:300;font-size:clamp(1.6rem,3vw,2.4rem);line-height:1.2;color:var(--text)}
 .hero-tagline em{font-style:italic;color:var(--pink)}
 .hero-right{display:flex;align-items:center;gap:1.5rem}
 .stat-block{text-align:right;cursor:pointer;padding:0.5rem 0.8rem;border:1px solid transparent;border-radius:3px;transition:all 0.2s}
 .stat-block:hover{border-color:var(--border);background:rgba(255,255,255,0.02)}
-.stat-num{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.2rem;display:block;line-height:1;color:var(--text)}
+.stat-num{font-family:'Lora',serif;font-weight:300;font-size:2.2rem;display:block;line-height:1;color:var(--text)}
 .stat-label{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.22em;color:var(--text-dim);text-transform:uppercase;margin-top:4px;display:block}
 .stat-hidden .stat-num{color:var(--text-dim);letter-spacing:0.1em;font-size:1.4rem}
 
@@ -68,12 +68,12 @@ nav button:hover{color:var(--pink-pale)}
 .card-placeholder span{font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;opacity:0.4}
 .card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,24,24,0.92) 0%,rgba(26,24,24,0.3) 45%,transparent 70%);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:1rem}
 .card:hover .card-overlay{opacity:1}
-.card-overlay-rating{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--pink-pale)}
+.card-overlay-rating{font-family:'Lora',serif;font-size:1.1rem;color:var(--pink-pale)}
 .card-badge{position:absolute;top:0.6rem;left:0.6rem;background:rgba(26,24,24,0.88);border:1px solid rgba(212,134,154,0.2);color:var(--pink-pale);font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.14em;padding:0.15rem 0.45rem;border-radius:2px;text-transform:uppercase;backdrop-filter:blur(8px)}
 .card-body{padding:0.85rem 0.95rem 1rem}
-.card-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1rem;color:var(--text);line-height:1.3;margin-bottom:0.18rem}
+.card-title{font-family:'Lora',serif;font-weight:400;font-size:1rem;color:var(--text);line-height:1.3;margin-bottom:0.18rem}
 .card-meta{font-family:'Courier Prime',monospace;font-size:0.57rem;color:var(--text-dim);letter-spacing:0.08em;margin-bottom:0.5rem}
-.card-rating{font-family:'Cormorant Garamond',serif;font-size:0.88rem;color:var(--pink);margin-bottom:0.5rem}
+.card-rating{font-family:'Lora',serif;font-size:0.88rem;color:var(--pink);margin-bottom:0.5rem}
 .card-excerpt{font-size:0.74rem;font-weight:300;line-height:1.6;color:var(--text-mid);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .card-genres{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:0.6rem}
 .card-genre-tag{padding:0.12rem 0.42rem;border:1px solid var(--border-soft);font-family:'Courier Prime',monospace;font-size:0.52rem;letter-spacing:0.08em;color:var(--text-dim);border-radius:2px;text-transform:uppercase}
@@ -84,7 +84,7 @@ nav button:hover{color:var(--pink-pale)}
 .modal{background:var(--bg-modal);border:1px solid var(--border);border-radius:8px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto}
 .modal-sm{max-width:400px}
 .modal-head{padding:1.8rem 2rem 1.3rem;border-bottom:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:flex-start}
-.modal-ttl{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.45rem;color:var(--text)}
+.modal-ttl{font-family:'Lora',serif;font-weight:300;font-size:1.45rem;color:var(--text)}
 .modal-sub{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.22em;color:var(--text-dim);text-transform:uppercase;margin-top:4px}
 .modal-x{background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text-dim);transition:color 0.2s;line-height:1;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid transparent}
 .modal-x:hover{color:var(--pink);border-color:var(--border)}
@@ -111,8 +111,8 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 .rating-slider{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
 .rating-slider::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--pink-deep);cursor:pointer;transition:background 0.2s,transform 0.15s}
 .rating-slider::-webkit-slider-thumb:hover{background:var(--pink);transform:scale(1.2)}
-.rating-num-input{width:55px;text-align:center;padding:0.38rem;font-family:'Cormorant Garamond',serif;font-size:1.05rem}
-.rating-display{font-family:'Cormorant Garamond',serif;font-size:0.88rem;color:var(--pink);white-space:nowrap}
+.rating-num-input{width:55px;text-align:center;padding:0.38rem;font-family:'Lora',serif;font-size:1.05rem}
+.rating-display{font-family:'Lora',serif;font-size:0.88rem;color:var(--pink);white-space:nowrap}
 
 /* ── PHOTO ── */
 .photo-drop{border:1px dashed var(--border);border-radius:4px;padding:1.3rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;background:var(--surface)}
@@ -138,9 +138,9 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 /* ── DETAIL MODAL ── */
 .detail-cover{width:100%;max-height:300px;object-fit:cover;display:block}
 .detail-cover-empty{width:100%;height:160px;background:linear-gradient(135deg,var(--surface),#2e2222);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--text-dim);opacity:0.35}
-.detail-stars{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--pink);line-height:1}
+.detail-stars{font-family:'Lora',serif;font-size:2.2rem;color:var(--pink);line-height:1}
 .detail-stars-label{font-family:'Courier Prime',monospace;font-size:0.54rem;color:var(--text-dim);letter-spacing:0.18em;text-transform:uppercase;margin-top:5px}
-.detail-review{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;line-height:1.85;color:var(--text-mid);border-left:2px solid var(--pink-deep);padding-left:1rem;margin:1rem 0}
+.detail-review{font-family:'Lora',serif;font-style:italic;font-size:1rem;line-height:1.85;color:var(--text-mid);border-left:2px solid var(--pink-deep);padding-left:1rem;margin:1rem 0}
 .detail-photos{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.8rem}
 .detail-photo{width:78px;height:78px;object-fit:cover;border-radius:3px;border:1px solid var(--border);cursor:pointer;transition:transform 0.2s,border-color 0.2s}
 .detail-photo:hover{transform:scale(1.05);border-color:var(--pink-deep)}
@@ -196,13 +196,20 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 /* ── EMPTY ── */
 .empty{grid-column:1/-1;text-align:center;padding:6rem 2rem}
 .empty-icon{font-size:2.5rem;margin-bottom:1.2rem;opacity:0.25}
-.empty h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:1.45rem;color:var(--text-mid);margin-bottom:0.6rem}
+.empty h3{font-family:'Lora',serif;font-weight:300;font-style:italic;font-size:1.45rem;color:var(--text-mid);margin-bottom:0.6rem}
 .empty p{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-dim);opacity:0.4}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.editor-toolbar{display:flex;gap:0.3rem;align-items:center;padding:0.4rem 0.6rem;background:var(--surface);border:1px solid var(--border);border-bottom:none;border-radius:3px 3px 0 0}
+.toolbar-btn{background:transparent;border:1px solid transparent;color:var(--text-dim);font-family:'Courier Prime',monospace;font-size:0.62rem;letter-spacing:0.08em;padding:0.2rem 0.5rem;border-radius:2px;cursor:pointer;transition:all 0.15s}
+.toolbar-btn:hover{background:var(--border);color:var(--text)}
+.toolbar-divider{width:1px;height:14px;background:var(--border);margin:0 0.2rem}
+.review-editor{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:0 0 3px 3px;padding:0.6rem 0.8rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.88rem;color:var(--text);outline:none;min-height:120px;line-height:1.65;transition:border-color 0.2s,box-shadow 0.2s}
+.review-editor:focus{border-color:var(--pink-deep);box-shadow:0 0 0 3px rgba(212,134,154,0.08)}
+.review-editor:empty::before{content:attr(data-placeholder);color:var(--text-dim);pointer-events:none}
 
 /* ── RESPONSIVE ── */
 @media(max-width:600px){
@@ -305,7 +312,18 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
           <span class="rating-display" id="f-rating-label">★ 0.0</span>
         </div>
       </div>
-      <div class="fg"><label>觀後感</label><textarea id="f-review" placeholder="Write your thoughts…"></textarea></div>
+      <div class="fg">
+  <label>觀後感</label>
+  <div class="editor-toolbar">
+    <button type="button" class="toolbar-btn" onclick="setSize('1.2rem','600')">大標題</button>
+    <button type="button" class="toolbar-btn" onclick="setSize('1rem','500')">小標題</button>
+    <button type="button" class="toolbar-btn" onclick="setSize('0.88rem','300')">內文</button>
+    <span class="toolbar-divider"></span>
+    <button type="button" class="toolbar-btn" onclick="toggleBold()"><b>B</b></button>
+    <button type="button" class="toolbar-btn" onclick="toggleItalic()"><i>I</i></button>
+  </div>
+  <div id="f-review" class="review-editor" contenteditable="true" data-placeholder="Write your thoughts…"></div>
+</div>
       <div class="fg">
         <label>照片（可新增 / 替換）</label>
         <div class="photo-drop">
@@ -507,7 +525,8 @@ async function saveEntry(){
     const keepUrls=Array.from(document.querySelectorAll('#existing-photos .photo-thumb')).map(img=>img.dataset.url);
     const finalPhotos=[...keepUrls,...uploadedUrls];
     const ratingVal=parseFloat(document.getElementById('f-rating').value)||0;
-    const payload={user_id:currentUser.id,title:titleVal,original_title:document.getElementById('f-orig').value.trim(),type:document.getElementById('f-type').value,year:document.getElementById('f-year').value||null,genre:selectedGenres.length?selectedGenres:null,rating:ratingVal,review:document.getElementById('f-review').value.trim(),photos:finalPhotos,updated_at:new Date().toISOString()};
+    const payload={user_id:currentUser.id,title:titleVal,original_title:document.getElementById('f-orig').value.trim(),type:document.getElementById('f-type').value,year:document.getElementById('f-year').value||null,genre:selectedGenres.length?selectedGenres:null,rating:ratingVal,review:document.getElementById('f-review').innerHTML.trim(),
+photos:finalPhotos,updated_at:new Date().toISOString()};
     let error;
     if(editId){({error}=await sb.from('entries').update(payload).eq('id',editId).eq('user_id',currentUser.id));}
     else{payload.created_at=new Date().toISOString();({error}=await sb.from('entries').insert(payload))}
@@ -619,6 +638,17 @@ function renderExistingPhotos(photos){
 const slider=document.getElementById('f-rating');
 const numInput=document.getElementById('f-rating-num');
 const ratingLabel=document.getElementById('f-rating-label');
+function setSize(size,weight){
+  document.getElementById('f-review').focus();
+  document.execCommand('fontSize',false,'7');
+  document.querySelectorAll('#f-review font[size="7"]').forEach(el=>{
+    el.removeAttribute('size');
+    el.style.fontSize=size;
+    el.style.fontWeight=weight;
+  });
+}
+function toggleBold(){document.getElementById('f-review').focus();document.execCommand('bold')}
+function toggleItalic(){document.getElementById('f-review').focus();document.execCommand('italic')}
 function syncRating(val){val=Math.min(10,Math.max(0,parseFloat(val)||0));val=Math.round(val*2)/2;slider.value=val;numInput.value=val;ratingLabel.textContent='★ '+val.toFixed(1)}
 slider.addEventListener('input',()=>syncRating(slider.value));
 numInput.addEventListener('input',()=>syncRating(numInput.value));
@@ -643,7 +673,7 @@ async function openDetail(id){
 
   const reviewEl=document.getElementById('d-review');
   if(e.review){reviewEl.className='detail-review';reviewEl.innerHTML=e.review.replace(/\n/g,'<br>')}
-  else{reviewEl.className='';reviewEl.innerHTML="<p style=\"color:var(--text-dim);font-size:0.88rem;font-style:italic;font-family:'Cormorant Garamond',serif;margin-top:0.8rem\">No review written yet.</p>"}
+  else{reviewEl.className='';reviewEl.innerHTML="<p style=\"color:var(--text-dim);font-size:0.88rem;font-style:italic;font-family:'Lora',serif;margin-top:0.8rem\">No review written yet.</p>"}
 
   const photosEl=document.getElementById('d-photos');photosEl.innerHTML='';
   if(e.photos&&e.photos.length){
@@ -668,7 +698,7 @@ document.getElementById('d-edit-btn').addEventListener('click',()=>{
   document.getElementById('add-title').textContent='編輯記錄';
   document.getElementById('f-id').value=e.id;document.getElementById('f-title').value=e.title;
   document.getElementById('f-orig').value=e.original_title||'';document.getElementById('f-year').value=e.year||'';
-  document.getElementById('f-review').value=e.review||'';
+  document.getElementById('f-review').innerHTML=e.review||'';
   document.getElementById('f-type').value=e.type||'movie';syncRating(e.rating||0);
   const genreArr=Array.isArray(e.genre)?e.genre:(e.genre?[e.genre]:[]);
   buildGenreGrid(genreArr);
