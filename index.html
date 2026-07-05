@@ -111,7 +111,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
 .comment-item{padding:0.8rem 0;border-bottom:1px solid var(--border-soft)}
 .comment-item:last-child{border-bottom:none}
 .comment-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem}
-.comment-email{font-family:'Courier Prime',monospace;font-size:0.58rem;color:var(--pink-pale);letter-spacing:0.08em}
+.comment-name{font-family:'Courier Prime',monospace;font-size:0.58rem;color:var(--pink-pale);letter-spacing:0.08em}
 .comment-date{font-family:'Courier Prime',monospace;font-size:0.55rem;color:var(--text-dim)}
 .comment-text{font-size:0.85rem;font-weight:300;line-height:1.65;color:var(--text-mid)}
 .comment-actions{display:flex;gap:0.5rem;margin-top:0.4rem}
@@ -292,6 +292,7 @@ textarea{resize:vertical;min-height:90px;line-height:1.65}
         <button class="auth-tab" id="tab-register" onclick="switchTab('register')">註冊</button>
       </div>
       <div class="fg"><label>Email</label><input type="email" id="auth-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="fg" id="nickname-field" style="display:none"><label>暱稱 *</label><input type="text" id="auth-nickname" placeholder="你的暱稱" autocomplete="off"></div>
       <div class="fg"><label>Password</label><input type="password" id="auth-password" placeholder="············" autocomplete="current-password"></div>
       <p class="auth-msg" id="auth-msg"></p>
       <button class="btn-primary" id="auth-submit">登入</button>
@@ -345,6 +346,7 @@ function switchTab(mode){
   document.querySelector('#auth-overlay .modal-ttl').textContent=mode==='login'?'Welcome Back':'Create Account';
   document.getElementById('auth-msg').className='auth-msg';
   document.getElementById('auth-password').autocomplete=mode==='login'?'current-password':'new-password';
+  document.getElementById('nickname-field').style.display=mode==='register'?'':'none';
 }
 
 document.getElementById('auth-submit').addEventListener('click',async()=>{
@@ -352,12 +354,26 @@ document.getElementById('auth-submit').addEventListener('click',async()=>{
   const password=document.getElementById('auth-password').value;
   const msgEl=document.getElementById('auth-msg');msgEl.className='auth-msg';
   if(!email||!password){msgEl.className='auth-msg error';msgEl.textContent='請填寫 Email 與密碼';return}
+
+  // 註冊時需要暱稱
+  if(authMode==='register'){
+    const nickname=document.getElementById('auth-nickname').value.trim();
+    if(!nickname){msgEl.className='auth-msg error';msgEl.textContent='請填寫暱稱';return}
+    const btn=document.getElementById('auth-submit');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>處理中…';
+    const{data,error}=await sb.auth.signUp({email,password});
+    if(error){msgEl.className='auth-msg error';msgEl.textContent=error.message;btn.disabled=false;btn.textContent='註冊';return}
+    // 建立 profile
+    if(data.user){
+      await sb.from('profiles').insert({id:data.user.id,nickname});
+    }
+    msgEl.className='auth-msg success';msgEl.textContent='✓ 註冊成功！請登入';
+    btn.disabled=false;btn.textContent='註冊';return;
+  }
+
   const btn=document.getElementById('auth-submit');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>處理中…';
-  let error;
-  if(authMode==='login'){({error}=await sb.auth.signInWithPassword({email,password}));}
-  else{({error}=await sb.auth.signUp({email,password}));if(!error){msgEl.className='auth-msg success';msgEl.textContent='✓ 註冊成功！請登入';btn.disabled=false;btn.textContent='註冊';return}}
+  const{error}=await sb.auth.signInWithPassword({email,password});
   if(error){msgEl.className='auth-msg error';msgEl.textContent=error.message==='Invalid login credentials'?'帳號或密碼錯誤':error.message}
-  btn.disabled=false;btn.textContent=authMode==='login'?'登入':'註冊';
+  btn.disabled=false;btn.textContent='登入';
 });
 document.getElementById('auth-close').addEventListener('click',()=>closeOverlay('auth-overlay'));
 document.getElementById('auth-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('auth-password').focus()});
@@ -536,6 +552,11 @@ document.getElementById('d-edit-btn').addEventListener('click',()=>{
 document.getElementById('d-delete-btn').addEventListener('click',()=>{closeOverlay('detail-overlay');setTimeout(()=>deleteEntry(currentDetailId),150)});
 
 // ── COMMENTS ──
+async function getNickname(userId){
+  const{data}=await sb.from('profiles').select('nickname').eq('id',userId).single();
+  return data?.nickname||'匿名';
+}
+
 async function loadComments(entryId){
   const listEl=document.getElementById('comments-list');
   const inputEl=document.getElementById('comment-input-area');
@@ -551,8 +572,16 @@ async function loadComments(entryId){
     if(pending.length>0)badgeEl.innerHTML=`<span class="pending-count">${pending.length} 待審核</span>`;
   }
 
-  listEl.innerHTML='';
+  // 取得所有留言者的暱稱
   const allComments=[...(approved||[]),...pending];
+  const userIds=[...new Set(allComments.map(c=>c.user_id))];
+  const nicknameMap={};
+  if(userIds.length){
+    const{data:profiles}=await sb.from('profiles').select('id,nickname').in('id',userIds);
+    (profiles||[]).forEach(p=>nicknameMap[p.id]=p.nickname);
+  }
+
+  listEl.innerHTML='';
   if(!allComments.length){
     listEl.innerHTML='<p style="font-family:\'Courier Prime\',monospace;font-size:0.6rem;color:var(--text-dim);opacity:0.5;padding:0.5rem 0">還沒有留言</p>';
   } else {
@@ -560,7 +589,8 @@ async function loadComments(entryId){
       const item=document.createElement('div');item.className='comment-item';
       const isPending=!c.approved;
       const date=new Date(c.created_at).toLocaleDateString('zh-TW',{year:'numeric',month:'short',day:'numeric'});
-      item.innerHTML=`<div class="comment-header"><span class="comment-email">${c.user_email}${isPending?' <span class="comment-pending-badge">待審核</span>':''}</span><span class="comment-date">${date}</span></div><div class="comment-text">${c.content.replace(/\n/g,'<br>')}</div>`;
+      const displayName=nicknameMap[c.user_id]||'匿名';
+      item.innerHTML=`<div class="comment-header"><span class="comment-name">${displayName}${isPending?' <span class="comment-pending-badge">待審核</span>':''}</span><span class="comment-date">${date}</span></div><div class="comment-text">${c.content.replace(/\n/g,'<br>')}</div>`;
       if(isOwner()){
         const actions=document.createElement('div');actions.className='comment-actions';
         if(isPending){
@@ -577,16 +607,22 @@ async function loadComments(entryId){
   }
 
   if(currentUser&&!isOwner()){
-    inputEl.innerHTML='<div class="comment-input-wrap"><textarea id="new-comment-text" placeholder="留下你的想法…"></textarea><button class="comment-submit" id="comment-submit-btn">送出留言</button></div>';
-    document.getElementById('comment-submit-btn').addEventListener('click',async()=>{
-      const text=document.getElementById('new-comment-text').value.trim();
-      if(!text){showToast('請輸入留言內容','error');return}
-      const btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='送出中…';
-      const{error}=await sb.from('comments').insert({entry_id:entryId,user_id:currentUser.id,user_email:currentUser.email,content:text,approved:false});
-      if(error){showToast('送出失敗：'+error.message,'error')}
-      else{showToast('✓ 留言已送出，等待審核','success');document.getElementById('new-comment-text').value=''}
-      btn.disabled=false;btn.textContent='送出留言';await loadComments(entryId);
-    });
+    // 確認有暱稱才能留言
+    const{data:profile}=await sb.from('profiles').select('nickname').eq('id',currentUser.id).single();
+    if(!profile){
+      inputEl.innerHTML='<p class="comment-login-hint">請先設定暱稱才能留言（重新註冊時設定）</p>';
+    } else {
+      inputEl.innerHTML='<div class="comment-input-wrap"><textarea id="new-comment-text" placeholder="留下你的想法…"></textarea><button class="comment-submit" id="comment-submit-btn">送出留言</button></div>';
+      document.getElementById('comment-submit-btn').addEventListener('click',async()=>{
+        const text=document.getElementById('new-comment-text').value.trim();
+        if(!text){showToast('請輸入留言內容','error');return}
+        const btn=document.getElementById('comment-submit-btn');btn.disabled=true;btn.textContent='送出中…';
+        const{error}=await sb.from('comments').insert({entry_id:entryId,user_id:currentUser.id,user_email:currentUser.email,content:text,approved:false});
+        if(error){showToast('送出失敗：'+error.message,'error')}
+        else{showToast('✓ 留言已送出，等待審核','success');document.getElementById('new-comment-text').value=''}
+        btn.disabled=false;btn.textContent='送出留言';await loadComments(entryId);
+      });
+    }
   } else if(!currentUser){
     inputEl.innerHTML='<p class="comment-login-hint">想留言嗎？<a onclick="closeOverlay(\'detail-overlay\');openOverlay(\'auth-overlay\')">登入</a>即可參與討論</p>';
   }
