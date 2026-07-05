@@ -326,7 +326,6 @@ function isOwner(){return currentUser?.email===OWNER_EMAIL}
 sb.auth.onAuthStateChange(async(event,session)=>{
   currentUser=session?.user??null;updateAuthUI();
   if(currentUser)closeOverlay('auth-overlay');
-  await loadEntries();
 });
 
 function updateAuthUI(){
