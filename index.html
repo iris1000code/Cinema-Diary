@@ -29,6 +29,9 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .logo-main em{color:var(--pink)}
 .logo-sep{color:var(--border);font-size:0.9rem;margin:0 0.1rem}
 .logo-sub{font-family:'Courier Prime',monospace;font-size:0.5rem;color:var(--text-dim);letter-spacing:0.32em;text-transform:uppercase}
+.nav-center{display:flex;align-items:center;gap:1.5rem;flex:1;justify-content:center}
+.nav-center-btn{background:none;border:none;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;color:var(--text-dim);text-transform:uppercase;cursor:pointer;transition:color 0.2s;padding:0;white-space:nowrap}
+.nav-center-btn:hover{color:var(--pink-pale)}
 
 /* search */
 .nav-search{flex:1;max-width:380px;position:relative;display:flex;align-items:center}
@@ -254,28 +257,30 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
     <span class="logo-sep">·</span>
     <span class="logo-sub">film journal</span>
   </div>
-  <div class="nav-search">
-    <input type="text" class="nav-search-input" id="search-input" placeholder="搜尋電影、導演、演員、關鍵字…">
-    <button class="nav-search-clear" id="search-clear">✕</button>
+  <div class="nav-center">
+    <button class="nav-center-btn" onclick="doFilter('all')">All</button>
+    <button class="nav-center-btn" onclick="doFilter('movie')">Films</button>
+    <button class="nav-center-btn" onclick="doFilter('series')">Series</button>
   </div>
   <div class="nav-right">
+    <div class="nav-search">
+      <input type="text" class="nav-search-input" id="search-input" placeholder="搜尋電影…">
+      <button class="nav-search-clear" id="search-clear">✕</button>
+    </div>
     <button class="nav-btn" id="auth-btn">🔒 登入</button>
-    <button class="btn-new" id="btn-new" style="display:none" disabled>+ New Entry</button>
+    <button class="btn-new" id="btn-new" style="display:none" disabled>+ New</button>
   </div>
 </header>
 
 <!-- FILTER BAR -->
 <div class="filter-bar" id="filter-bar">
-  <button class="filter-tab active" data-filter="all">All</button>
-  <button class="filter-tab" data-filter="movie">Films</button>
-  <button class="filter-tab" data-filter="series">Series</button>
-  <span class="filter-sep"></span>
   <button class="filter-tab" data-filter="action">Action</button>
   <button class="filter-tab" data-filter="drama">Drama</button>
   <button class="filter-tab" data-filter="comedy">Comedy</button>
   <button class="filter-tab" data-filter="thriller">Thriller</button>
   <button class="filter-tab" data-filter="scifi">Sci-Fi</button>
   <button class="filter-tab" data-filter="animation">Animation</button>
+  <button class="filter-tab" data-filter="documentary">Documentary</button>
   <div class="more-wrap">
     <button class="more-btn" id="more-btn">
       More
@@ -446,7 +451,8 @@ const GENRES={
   drama:'Drama 劇情',horror:'Horror 恐怖',fantasy:'Fantasy 奇幻',
   romance:'Romance 愛情',animation:'Animation 動畫',thriller:'Thriller 驚悚',
   suspense:'Suspense 懸疑',scifi:'Sci-Fi 科幻',musical:'Musical 歌舞',
-  war:'War 戰爭',western:'Western 西部',epic:'Epic 史詩',historical:'Historical 歷史'
+  war:'War 戰爭',western:'Western 西部',epic:'Epic 史詩',historical:'Historical 歷史',
+  documentary:'Documentary 紀錄'
 };
 let db=[],filter='all',sortMode='new',viewMode='grid';
 let editId=null,currentDetailId=null,newPhotos=[],removedPhotoUrls=[],currentUser=null;
