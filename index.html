@@ -15,7 +15,7 @@
   --bg:#111010;--bg-card:#1a1818;--bg-modal:#181616;--surface:#232020;
   --border:#2e2a2a;--border-soft:#252222;
   --pink:#d4869a;--pink-deep:#b8697f;--pink-pale:#e8b4c2;--pink-muted:rgba(212,134,154,0.12);
-  --text:#ede8e4;--text-mid:#a89890;--text-dim:#5a4e4e;
+  --text:#f0ece8;--text-mid:#c4b4aa;--text-dim:#7a6a68;
   --white:#f5f0ed;--shadow:rgba(0,0,0,0.6);--shadow-pink:rgba(212,134,154,0.12);
   --green:#6dba8a;--red:#d47070;
   --accent:#c5677c;
@@ -34,7 +34,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 /* search */
 .nav-search{flex:1;max-width:380px;position:relative;display:flex;align-items:center}
 .nav-search-icon{position:absolute;left:0.7rem;color:var(--text-dim);font-size:0.8rem;pointer-events:none}
-.nav-search-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;padding:0.4rem 2.2rem 0.4rem 2rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.8rem;color:var(--text);outline:none;transition:border-color 0.2s,background 0.2s}
+.nav-search-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;padding:0.4rem 2.2rem 0.4rem 2.4rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.8rem;color:var(--text);outline:none;transition:border-color 0.2s,background 0.2s}
 .nav-search-input:focus{border-color:var(--pink-deep);background:rgba(255,255,255,0.06)}
 .nav-search-input::placeholder{color:var(--text-dim);font-size:0.76rem}
 .nav-search-clear{position:absolute;right:0.6rem;background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:0.75rem;display:none;padding:0.2rem}
@@ -271,16 +271,31 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
 
 <!-- ══ FILTER BAR ══ -->
 <div class="filter-bar" id="filter-bar">
-  <button class="filter-tab active" data-filter="all">All</button>
-  <button class="filter-tab" data-filter="movie">Films</button>
-  <button class="filter-tab" data-filter="series">Series</button>
-  <span class="filter-sep"></span>
-  <button class="filter-tab" data-filter="drama">Drama</button>
-  <button class="filter-tab" data-filter="thriller">Thriller</button>
-  <button class="filter-tab" data-filter="scifi">Sci-Fi</button>
-  <button class="filter-tab" data-filter="animation">Animation</button>
-  <button class="filter-tab" data-filter="documentary">Documentary</button>
-  <div class="more-wrap">
+<button class="filter-tab active" data-filter="all">All</button>
+<button class="filter-tab" data-filter="movie">Films</button>
+<button class="filter-tab" data-filter="series">Series</button>
+<span class="filter-sep"></span>
+<button class="filter-tab" data-filter="action">Action</button>
+<button class="filter-tab" data-filter="drama">Drama</button>
+<button class="filter-tab" data-filter="comedy">Comedy</button>
+<button class="filter-tab" data-filter="thriller">Thriller</button>
+<button class="filter-tab" data-filter="scifi">Sci-Fi</button>
+<button class="filter-tab" data-filter="animation">Animation</button>
+<div class="more-wrap">
+  <button class="more-btn" id="more-btn">More <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="more-dropdown" id="more-dropdown">
+    <button class="more-item" data-filter="adventure">Adventure</button>
+    <button class="more-item" data-filter="horror">Horror</button>
+    <button class="more-item" data-filter="fantasy">Fantasy</button>
+    <button class="more-item" data-filter="romance">Romance</button>
+    <button class="more-item" data-filter="suspense">Suspense</button>
+    <button class="more-item" data-filter="musical">Musical</button>
+    <button class="more-item" data-filter="war">War</button>
+    <button class="more-item" data-filter="western">Western</button>
+    <button class="more-item" data-filter="epic">Epic</button>
+    <button class="more-item" data-filter="historical">Historical</button>
+  </div>
+</div>
     <button class="more-btn" id="more-btn">
       More
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -443,7 +458,13 @@ const{createClient}=supabase;
 const sb=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const OWNER_EMAIL='fisher1010@gmail.com';
 const BUCKET='diary-photos';
-const GENRES={drama:'劇情',thriller:'驚悚',mystery:'懸疑',crime:'犯罪',romance:'愛情',scifi:'科幻',fantasy:'奇幻',animation:'動畫',documentary:'紀錄',horror:'恐怖',action:'動作',comedy:'喜劇',biography:'傳記',history:'歷史',adventure:'冒險',music:'音樂'};
+const GENRES={
+  action:'Action',adventure:'Adventure',comedy:'Comedy',
+  drama:'Drama',horror:'Horror',fantasy:'Fantasy',
+  romance:'Romance',animation:'Animation',thriller:'Thriller',
+  suspense:'Suspense',scifi:'Sci-Fi',musical:'Musical',
+  war:'War',western:'Western',epic:'Epic',historical:'Historical'
+};
 let db=[],filter='all',sortMode='new',viewMode='grid';
 let editId=null,currentDetailId=null,newPhotos=[],removedPhotoUrls=[],currentUser=null;
 let selectedGenres=[],searchQuery='';
