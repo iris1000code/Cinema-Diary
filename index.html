@@ -15,10 +15,9 @@
   --bg:#111010;--bg-card:#1a1818;--bg-modal:#181616;--surface:#232020;
   --border:#2e2a2a;--border-soft:#252222;
   --pink:#d4869a;--pink-deep:#b8697f;--pink-pale:#e8b4c2;--pink-muted:rgba(212,134,154,0.12);
-  --text:#f0ece8;--text-mid:#c4b4aa;--text-dim:#7a6a68;
+  --text:#f2eeea;--text-mid:#cdbfb8;--text-dim:#8a7a78;
   --white:#f5f0ed;--shadow:rgba(0,0,0,0.6);--shadow-pink:rgba(212,134,154,0.12);
-  --green:#6dba8a;--red:#d47070;
-  --accent:#c5677c;
+  --green:#6dba8a;--red:#d47070;--accent:#c5677c;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
@@ -33,8 +32,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 
 /* search */
 .nav-search{flex:1;max-width:380px;position:relative;display:flex;align-items:center}
-.nav-search-icon{position:absolute;left:0.7rem;color:var(--text-dim);font-size:0.8rem;pointer-events:none}
-.nav-search-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;padding:0.4rem 2.2rem 0.4rem 2.4rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.8rem;color:var(--text);outline:none;transition:border-color 0.2s,background 0.2s}
+.nav-search-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;padding:0.4rem 2rem 0.4rem 0.8rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.8rem;color:var(--text);outline:none;transition:border-color 0.2s,background 0.2s}
 .nav-search-input:focus{border-color:var(--pink-deep);background:rgba(255,255,255,0.06)}
 .nav-search-input::placeholder{color:var(--text-dim);font-size:0.76rem}
 .nav-search-clear{position:absolute;right:0.6rem;background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:0.75rem;display:none;padding:0.2rem}
@@ -45,7 +43,6 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .nav-right{display:flex;align-items:center;gap:1.2rem;margin-left:auto}
 .nav-btn{background:none;border:none;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;color:var(--text-dim);text-transform:uppercase;cursor:pointer;transition:color 0.2s;padding:0;white-space:nowrap}
 .nav-btn:hover{color:var(--pink-pale)}
-#auth-btn{display:flex;align-items:center;gap:0.35rem}
 .btn-new{background:var(--pink-deep);color:var(--white);border:none;padding:0.38rem 1rem;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:background 0.2s;white-space:nowrap}
 .btn-new:hover{background:var(--pink)}
 .btn-new:disabled{opacity:0.35;cursor:not-allowed}
@@ -57,11 +54,6 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .filter-tab:hover{color:var(--text)}
 .filter-tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:400}
 .filter-sep{width:1px;height:16px;background:var(--border);margin:0 0.3rem;flex-shrink:0}
-.filter-right{margin-left:auto;display:flex;align-items:center;gap:0.5rem;flex-shrink:0}
-.sort-btn{background:none;border:1px solid var(--border);color:var(--text-dim);font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.sort-btn:hover,.sort-btn.active{border-color:var(--pink-deep);color:var(--pink-pale)}
-.view-btn{background:none;border:1px solid transparent;color:var(--text-dim);font-size:0.85rem;padding:0.2rem 0.4rem;cursor:pointer;border-radius:3px;transition:all 0.2s}
-.view-btn:hover,.view-btn.active{color:var(--pink-pale);border-color:var(--border)}
 
 /* more dropdown */
 .more-wrap{position:relative;flex-shrink:0}
@@ -69,11 +61,19 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .more-btn:hover{color:var(--text)}
 .more-btn svg{transition:transform 0.2s}
 .more-btn.open svg{transform:rotate(180deg)}
-.more-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:var(--bg-modal);border:1px solid var(--border);border-radius:6px;padding:0.4rem;min-width:130px;display:none;flex-direction:column;gap:0.1rem;box-shadow:0 12px 32px var(--shadow)}
+.more-dropdown{position:absolute;top:calc(100% + 4px);left:0;background:var(--bg-modal);border:1px solid var(--border);border-radius:6px;padding:0.4rem;min-width:140px;display:none;flex-direction:column;gap:0.1rem;box-shadow:0 12px 32px var(--shadow)}
 .more-dropdown.show{display:flex}
 .more-item{background:none;border:none;font-family:'Jost',sans-serif;font-size:0.8rem;color:var(--text-dim);cursor:pointer;padding:0.45rem 0.8rem;border-radius:4px;text-align:left;transition:all 0.15s;white-space:nowrap}
 .more-item:hover{background:var(--surface);color:var(--text)}
 .more-item.active{color:var(--accent);background:rgba(197,103,124,0.08)}
+
+/* filter right — pushed to end */
+.filter-spacer{flex:1}
+.filter-right{display:flex;align-items:center;gap:0.5rem;flex-shrink:0;padding-left:1rem}
+.sort-btn{background:none;border:1px solid var(--border);color:var(--text-dim);font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.65rem;border-radius:3px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.sort-btn:hover,.sort-btn.active{border-color:var(--pink-deep);color:var(--pink-pale)}
+.view-btn{background:none;border:1px solid transparent;color:var(--text-dim);font-size:0.85rem;padding:0.2rem 0.4rem;cursor:pointer;border-radius:3px;transition:all 0.2s}
+.view-btn:hover,.view-btn.active{color:var(--pink-pale);border-color:var(--border)}
 
 /* ══ GRID ══ */
 .grid-wrap{padding:1.8rem 2rem 3rem}
@@ -92,7 +92,6 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .card-placeholder span{font-family:'Courier Prime',monospace;font-size:0.5rem;letter-spacing:0.16em;text-transform:uppercase;opacity:0.35}
 .card-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(17,16,16,0.95) 0%,rgba(17,16,16,0.4) 40%,transparent 65%);opacity:0;transition:opacity 0.28s;display:flex;align-items:flex-end;padding:0.85rem}
 .card:hover .card-img-overlay{opacity:1}
-.card-overlay-content{display:flex;align-items:center;gap:0.4rem}
 .card-overlay-rating{font-family:'Lora',serif;font-size:1rem;color:var(--pink-pale)}
 .card-badge{position:absolute;top:0.55rem;left:0.55rem;background:rgba(17,16,16,0.82);border:1px solid rgba(212,134,154,0.18);color:var(--pink-pale);font-family:'Courier Prime',monospace;font-size:0.5rem;letter-spacing:0.14em;padding:0.13rem 0.4rem;border-radius:2px;text-transform:uppercase;backdrop-filter:blur(6px)}
 .card-body{padding:0.8rem 0.9rem 0.95rem}
@@ -243,75 +242,59 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
   .modal-body,.modal-head{padding-left:1.2rem;padding-right:1.2rem}
   .toast{bottom:1rem;right:1rem;left:1rem}
   footer{flex-direction:column;gap:0.8rem;padding:1.3rem 1rem}
-  .nav-right .nav-btn:not(#auth-btn){display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
+<!-- HEADER -->
 <header>
   <div class="logo">
     <span class="logo-main">Cinema <em>Diary</em></span>
     <span class="logo-sep">·</span>
     <span class="logo-sub">film journal</span>
   </div>
-
   <div class="nav-search">
-    <span class="nav-search-icon">🔍</span>
     <input type="text" class="nav-search-input" id="search-input" placeholder="搜尋電影、導演、演員、關鍵字…">
     <button class="nav-search-clear" id="search-clear">✕</button>
   </div>
-
   <div class="nav-right">
     <button class="nav-btn" id="auth-btn">🔒 登入</button>
     <button class="btn-new" id="btn-new" style="display:none" disabled>+ New Entry</button>
   </div>
 </header>
 
-<!-- ══ FILTER BAR ══ -->
+<!-- FILTER BAR -->
 <div class="filter-bar" id="filter-bar">
-<button class="filter-tab active" data-filter="all">All</button>
-<button class="filter-tab" data-filter="movie">Films</button>
-<button class="filter-tab" data-filter="series">Series</button>
-<span class="filter-sep"></span>
-<button class="filter-tab" data-filter="action">Action</button>
-<button class="filter-tab" data-filter="drama">Drama</button>
-<button class="filter-tab" data-filter="comedy">Comedy</button>
-<button class="filter-tab" data-filter="thriller">Thriller</button>
-<button class="filter-tab" data-filter="scifi">Sci-Fi</button>
-<button class="filter-tab" data-filter="animation">Animation</button>
-<div class="more-wrap">
-  <button class="more-btn" id="more-btn">More <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  <div class="more-dropdown" id="more-dropdown">
-    <button class="more-item" data-filter="adventure">Adventure</button>
-    <button class="more-item" data-filter="horror">Horror</button>
-    <button class="more-item" data-filter="fantasy">Fantasy</button>
-    <button class="more-item" data-filter="romance">Romance</button>
-    <button class="more-item" data-filter="suspense">Suspense</button>
-    <button class="more-item" data-filter="musical">Musical</button>
-    <button class="more-item" data-filter="war">War</button>
-    <button class="more-item" data-filter="western">Western</button>
-    <button class="more-item" data-filter="epic">Epic</button>
-    <button class="more-item" data-filter="historical">Historical</button>
-  </div>
-</div>
+  <button class="filter-tab active" data-filter="all">All</button>
+  <button class="filter-tab" data-filter="movie">Films</button>
+  <button class="filter-tab" data-filter="series">Series</button>
+  <span class="filter-sep"></span>
+  <button class="filter-tab" data-filter="action">Action</button>
+  <button class="filter-tab" data-filter="drama">Drama</button>
+  <button class="filter-tab" data-filter="comedy">Comedy</button>
+  <button class="filter-tab" data-filter="thriller">Thriller</button>
+  <button class="filter-tab" data-filter="scifi">Sci-Fi</button>
+  <button class="filter-tab" data-filter="animation">Animation</button>
+  <div class="more-wrap">
     <button class="more-btn" id="more-btn">
       More
       <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <div class="more-dropdown" id="more-dropdown">
-      <button class="more-item" data-filter="mystery">懸疑</button>
-      <button class="more-item" data-filter="crime">犯罪</button>
-      <button class="more-item" data-filter="romance">愛情</button>
-      <button class="more-item" data-filter="fantasy">奇幻</button>
-      <button class="more-item" data-filter="horror">恐怖</button>
-      <button class="more-item" data-filter="action">動作</button>
-      <button class="more-item" data-filter="comedy">喜劇</button>
-      <button class="more-item" data-filter="biography">傳記</button>
-      <button class="more-item" data-filter="history">歷史</button>
+      <button class="more-item" data-filter="adventure">Adventure</button>
+      <button class="more-item" data-filter="horror">Horror</button>
+      <button class="more-item" data-filter="fantasy">Fantasy</button>
+      <button class="more-item" data-filter="romance">Romance</button>
+      <button class="more-item" data-filter="suspense">Suspense</button>
+      <button class="more-item" data-filter="musical">Musical</button>
+      <button class="more-item" data-filter="war">War</button>
+      <button class="more-item" data-filter="western">Western</button>
+      <button class="more-item" data-filter="epic">Epic</button>
+      <button class="more-item" data-filter="historical">Historical</button>
     </div>
   </div>
+  <div class="filter-spacer"></div>
   <div class="filter-right">
     <button class="sort-btn active" id="sort-new" onclick="setSort('new')">最新新增</button>
     <button class="sort-btn" id="sort-rating" onclick="setSort('rating')">最高評分</button>
@@ -320,7 +303,7 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
   </div>
 </div>
 
-<!-- ══ GRID ══ -->
+<!-- GRID -->
 <div class="grid-wrap">
   <div id="search-results-count" class="search-results-count" style="display:none"></div>
   <div class="grid view-grid" id="grid"></div>
@@ -459,10 +442,9 @@ const sb=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const OWNER_EMAIL='fisher1010@gmail.com';
 const BUCKET='diary-photos';
 const GENRES={
-  action:'Action',adventure:'Adventure',comedy:'Comedy',
-  drama:'Drama',horror:'Horror',fantasy:'Fantasy',
-  romance:'Romance',animation:'Animation',thriller:'Thriller',
-  suspense:'Suspense',scifi:'Sci-Fi',musical:'Musical',
+  action:'Action',adventure:'Adventure',comedy:'Comedy',drama:'Drama',
+  horror:'Horror',fantasy:'Fantasy',romance:'Romance',animation:'Animation',
+  thriller:'Thriller',suspense:'Suspense',scifi:'Sci-Fi',musical:'Musical',
   war:'War',western:'Western',epic:'Epic',historical:'Historical'
 };
 let db=[],filter='all',sortMode='new',viewMode='grid';
@@ -476,7 +458,6 @@ function closeOverlay(id){document.getElementById(id).classList.remove('open')}
 function openOverlay(id){document.getElementById(id).classList.add('open')}
 function isOwner(){return currentUser?.email===OWNER_EMAIL}
 
-// ── SEARCH ──
 document.getElementById('search-input').addEventListener('input',e=>{
   searchQuery=e.target.value.trim().toLowerCase();
   document.getElementById('search-clear').classList.toggle('show',searchQuery.length>0);
@@ -484,11 +465,9 @@ document.getElementById('search-input').addEventListener('input',e=>{
 });
 document.getElementById('search-clear').addEventListener('click',()=>{
   document.getElementById('search-input').value='';searchQuery='';
-  document.getElementById('search-clear').classList.remove('show');
-  render();
+  document.getElementById('search-clear').classList.remove('show');render();
 });
 
-// ── MORE DROPDOWN ──
 document.getElementById('more-btn').addEventListener('click',e=>{
   e.stopPropagation();
   const dd=document.getElementById('more-dropdown');
@@ -500,25 +479,20 @@ document.addEventListener('click',()=>{
   document.getElementById('more-btn').classList.remove('open');
 });
 
-// ── SORT ──
 function setSort(mode){
   sortMode=mode;
   document.getElementById('sort-new').classList.toggle('active',mode==='new');
   document.getElementById('sort-rating').classList.toggle('active',mode==='rating');
   render();
 }
-
-// ── VIEW ──
 function setView(mode){
   viewMode=mode;
-  const grid=document.getElementById('grid');
-  grid.className='grid view-'+mode;
+  document.getElementById('grid').className='grid view-'+mode;
   document.getElementById('view-grid-btn').classList.toggle('active',mode==='grid');
   document.getElementById('view-list-btn').classList.toggle('active',mode==='list');
   render();
 }
 
-// ── GENRE CHIP ──
 function buildGenreGrid(selected=[]){
   const grid=document.getElementById('genre-grid');grid.innerHTML='';
   selectedGenres=[...selected];
@@ -534,7 +508,6 @@ function buildGenreGrid(selected=[]){
   });
 }
 
-// ── AUTH ──
 sb.auth.onAuthStateChange(async(event,session)=>{
   currentUser=session?.user??null;updateAuthUI();
   if(currentUser)closeOverlay('auth-overlay');
@@ -589,7 +562,6 @@ document.getElementById('auth-close').addEventListener('click',()=>closeOverlay(
 document.getElementById('auth-email').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('auth-password').focus()});
 document.getElementById('auth-password').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('auth-submit').click()});
 
-// ── ENTRIES ──
 async function loadEntries(){
   showLoading('Loading diary…');
   const{data,error}=await sb.from('entries').select('*').order('created_at',{ascending:false});
@@ -638,7 +610,6 @@ function urlToStoragePath(url){
   try{const marker=`/object/public/${BUCKET}/`;const idx=url.indexOf(marker);if(idx===-1)return null;return decodeURIComponent(url.slice(idx+marker.length))}catch{return null}
 }
 
-// ── FILTER ──
 document.getElementById('filter-bar').addEventListener('click',e=>{
   const tab=e.target.closest('.filter-tab');
   const item=e.target.closest('.more-item');
@@ -654,10 +625,7 @@ document.getElementById('filter-bar').addEventListener('click',e=>{
     render();
   }
 });
-function doFilter(val){filter=val;render()}
-function doFilterRating(min){render(db.filter(e=>e.rating>=min))}
 
-// ── RENDER ──
 function getFiltered(){
   let list=[...db];
   if(filter==='movie'||filter==='series')list=list.filter(e=>e.type===filter);
@@ -690,7 +658,7 @@ function render(list){
       const img=document.createElement('img');img.className='card-img';img.src=e.photos[0];img.alt='';imgWrap.appendChild(img);
       if(!isList&&e.rating){
         const ov=document.createElement('div');ov.className='card-img-overlay';
-        ov.innerHTML=`<div class="card-overlay-content"><span class="card-overlay-rating">★ ${parseFloat(e.rating).toFixed(1)}</span></div>`;
+        ov.innerHTML=`<span class="card-overlay-rating">★ ${parseFloat(e.rating).toFixed(1)}</span>`;
         imgWrap.appendChild(ov);
       }
     } else{
@@ -707,7 +675,6 @@ function render(list){
   });
 }
 
-// ── ADD MODAL ──
 document.getElementById('btn-new').addEventListener('click',()=>{if(!currentUser){openOverlay('auth-overlay');return}showAddModal()});
 function showAddModal(){
   editId=null;newPhotos=[];removedPhotoUrls=[];
@@ -759,7 +726,6 @@ slider.addEventListener('input',()=>syncRating(slider.value));
 numInput.addEventListener('input',()=>syncRating(numInput.value));
 document.getElementById('save-btn').addEventListener('click',saveEntry);
 
-// ── DETAIL ──
 async function openDetail(id){
   const e=db.find(x=>x.id===id);if(!e)return;currentDetailId=id;
   document.getElementById('d-title').textContent=e.title;
@@ -779,8 +745,7 @@ async function openDetail(id){
   const dateStr=e.created_at?new Date(e.created_at).toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric'}):'';
   document.getElementById('d-meta').textContent=dateStr?`Logged on ${dateStr}`:'';
   const genreArr=Array.isArray(e.genre)?e.genre:(e.genre?[e.genre]:[]);
-  const genresEl=document.getElementById('d-genres');
-  genresEl.innerHTML=genreArr.length?`<div class="detail-genres">${genreArr.map(g=>`<span class="detail-genre-tag">${GENRES[g]||g}</span>`).join('')}</div>`:'';
+  document.getElementById('d-genres').innerHTML=genreArr.length?`<div class="detail-genres">${genreArr.map(g=>`<span class="detail-genre-tag">${GENRES[g]||g}</span>`).join('')}</div>`:'';
   const reviewEl=document.getElementById('d-review');
   if(e.review){reviewEl.className='detail-review';reviewEl.innerHTML=e.review}
   else{reviewEl.className='';reviewEl.innerHTML=`<p style="color:var(--text-dim);font-size:0.86rem;font-style:italic;font-family:'Lora',serif;margin-top:0.8rem">No review written yet.</p>`}
@@ -813,7 +778,6 @@ document.getElementById('d-edit-btn').addEventListener('click',()=>{
 });
 document.getElementById('d-delete-btn').addEventListener('click',()=>{closeOverlay('detail-overlay');setTimeout(()=>deleteEntry(currentDetailId),150)});
 
-// ── COMMENTS ──
 async function loadComments(entryId){
   const listEl=document.getElementById('comments-list');
   const inputEl=document.getElementById('comment-input-area');
