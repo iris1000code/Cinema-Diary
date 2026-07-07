@@ -15,7 +15,7 @@
   --bg:#111010;--bg-card:#1a1818;--bg-modal:#181616;--surface:#232020;
   --border:#2e2a2a;--border-soft:#252222;
   --pink:#d4869a;--pink-deep:#b8697f;--pink-pale:#e8b4c2;--pink-muted:rgba(212,134,154,0.12);
-  --text:#f2eeea;--text-mid:#cdbfb8;--text-dim:#8a7a78;
+  --text:#ffffff;--text-mid:#e0d4cc;--text-dim:#a89890;
   --white:#f5f0ed;--shadow:rgba(0,0,0,0.6);--shadow-pink:rgba(212,134,154,0.12);
   --green:#6dba8a;--red:#d47070;--accent:#c5677c;
 }
@@ -470,6 +470,7 @@ document.getElementById('search-clear').addEventListener('click',()=>{
 
 document.getElementById('more-btn').addEventListener('click',e=>{
   e.stopPropagation();
+  e.preventDefault();
   const dd=document.getElementById('more-dropdown');
   const btn=document.getElementById('more-btn');
   dd.classList.toggle('show');btn.classList.toggle('open');
@@ -611,6 +612,7 @@ function urlToStoragePath(url){
 }
 
 document.getElementById('filter-bar').addEventListener('click',e=>{
+  if(e.target.closest('.more-btn'))return;
   const tab=e.target.closest('.filter-tab');
   const item=e.target.closest('.more-item');
   if(tab){
