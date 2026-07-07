@@ -48,7 +48,7 @@ header{position:sticky;top:0;z-index:200;background:rgba(17,16,16,0.96);backdrop
 .btn-new:disabled{opacity:0.35;cursor:not-allowed}
 
 /* ══ FILTER BAR ══ */
-.filter-bar{background:rgba(17,16,16,0.92);border-bottom:1px solid var(--border-soft);padding:0 2rem;display:flex;align-items:center;height:46px;gap:0;position:sticky;top:58px;z-index:100;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.filter-bar{background:rgba(17,16,16,0.92);border-bottom:1px solid var(--border-soft);padding:0 2rem;display:flex;align-items:center;height:46px;gap:0;position:sticky;top:58px;z-index:100;overflow:visible;scrollbar-width:none}
 .filter-bar::-webkit-scrollbar{display:none}
 .filter-tab{background:none;border:none;font-family:'Jost',sans-serif;font-weight:300;font-size:0.8rem;color:var(--text-dim);cursor:pointer;padding:0 1rem;height:100%;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color 0.2s,border-color 0.2s;white-space:nowrap;flex-shrink:0}
 .filter-tab:hover{color:var(--text)}
@@ -442,10 +442,11 @@ const sb=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const OWNER_EMAIL='fisher1010@gmail.com';
 const BUCKET='diary-photos';
 const GENRES={
-  action:'Action',adventure:'Adventure',comedy:'Comedy',drama:'Drama',
-  horror:'Horror',fantasy:'Fantasy',romance:'Romance',animation:'Animation',
-  thriller:'Thriller',suspense:'Suspense',scifi:'Sci-Fi',musical:'Musical',
-  war:'War',western:'Western',epic:'Epic',historical:'Historical'
+  action:'Action 動作',adventure:'Adventure 冒險',comedy:'Comedy 喜劇',
+  drama:'Drama 劇情',horror:'Horror 恐怖',fantasy:'Fantasy 奇幻',
+  romance:'Romance 愛情',animation:'Animation 動畫',thriller:'Thriller 驚悚',
+  suspense:'Suspense 懸疑',scifi:'Sci-Fi 科幻',musical:'Musical 歌舞',
+  war:'War 戰爭',western:'Western 西部',epic:'Epic 史詩',historical:'Historical 歷史'
 };
 let db=[],filter='all',sortMode='new',viewMode='grid';
 let editId=null,currentDetailId=null,newPhotos=[],removedPhotoUrls=[],currentUser=null;
