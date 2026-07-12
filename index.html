@@ -713,7 +713,14 @@ document.getElementById('filter-bar').addEventListener('click',e=>{
     render();
   }
 });
-
+function doFilter(val){
+  filter=val;
+  document.querySelectorAll('.filter-tab,.more-item').forEach(el=>el.classList.remove('active'));
+  const match=document.querySelector(`.filter-tab[data-filter="${val}"]`);
+  if(match)match.classList.add('active');
+  render();
+}
+function doFilterRating(min){document.querySelectorAll('.filter-tab,.more-item').forEach(c=>c.classList.remove('active'));render(db.filter(e=>e.rating>=min))}
 function getFiltered(){
   let list=[...db];
   if(filter==='movie'||filter==='series')list=list.filter(e=>e.type===filter);
