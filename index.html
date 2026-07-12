@@ -337,6 +337,7 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
     </button>
     <div class="more-dropdown" id="more-dropdown">
       <button class="more-item" data-filter="adventure">Adventure</button>
+      <button class="more-item" data-filter="crime">Crime 犯罪</button>
       <button class="more-item" data-filter="horror">Horror</button>
       <button class="more-item" data-filter="fantasy">Fantasy</button>
       <button class="more-item" data-filter="romance">Romance</button>
@@ -388,7 +389,7 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
         <div class="fg"><label>類型</label>
           <select id="f-type"><option value="movie">電影</option><option value="series">影集</option></select>
         </div>
-        <div class="fg"><label>年份</label><input type="number" id="f-year" placeholder="2024" min="1888" max="2099"></div>
+        <div class="fg"><label>年份</label><input type="text" id="f-year" placeholder="2024 或 2000-2007"></div>
       </div>
       <div class="fg">
         <label>類別（可多選）</label>
@@ -511,7 +512,7 @@ const GENRES={
   romance:'Romance 愛情',animation:'Animation 動畫',thriller:'Thriller 驚悚',
   suspense:'Suspense 懸疑',scifi:'Sci-Fi 科幻',musical:'Musical 歌舞',
   war:'War 戰爭',western:'Western 西部',epic:'Epic 史詩',historical:'Historical 歷史',
-  documentary:'Documentary 紀錄'
+  crime:'Crime 犯罪',documentary:'Documentary 紀錄' 
 };
 let db=[],filter='all',sortMode='new',viewMode='grid';
 let editId=null,currentDetailId=null,newPhotos=[],removedPhotoUrls=[],currentUser=null;
