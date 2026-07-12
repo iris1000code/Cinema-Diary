@@ -398,8 +398,8 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
       </div>
       <div class="fg"><label>我的評分（0 - 10）</label>
         <div class="rating-wrap">
-          <input type="range" class="rating-slider" id="f-rating" min="0" max="10" step="0.5" value="0">
-          <input type="number" class="rating-num-input" id="f-rating-num" min="0" max="10" step="0.5" value="0">
+          <input type="range" class="rating-slider" id="f-rating" min="0" max="10" step="0.1" value="0">
+          <input type="number" class="rating-num-input" id="f-rating-num" min="0" max="10" step="0.1" value="0">
           <span class="rating-display" id="f-rating-label">★ 0.0</span>
         </div>
       </div>
@@ -832,7 +832,7 @@ const ratingLabel=document.getElementById('f-rating-label');
 function setSize(size,weight){document.getElementById('f-review').focus();document.execCommand('fontSize',false,'7');document.querySelectorAll('#f-review font[size="7"]').forEach(el=>{el.removeAttribute('size');el.style.fontSize=size;el.style.fontWeight=weight})}
 function toggleBold(){document.getElementById('f-review').focus();document.execCommand('bold')}
 function toggleItalic(){document.getElementById('f-review').focus();document.execCommand('italic')}
-function syncRating(val){val=Math.min(10,Math.max(0,parseFloat(val)||0));val=Math.round(val*2)/2;slider.value=val;numInput.value=val;ratingLabel.textContent='★ '+val.toFixed(1)}
+function syncRating(val){val=Math.min(10,Math.max(0,parseFloat(val)||0));val=Math.round(val*10)/10;slider.value=val;numInput.value=val;ratingLabel.textContent='★ '+val.toFixed(1)}
 slider.addEventListener('input',()=>syncRating(slider.value));
 numInput.addEventListener('input',()=>syncRating(numInput.value));
 document.getElementById('save-btn').addEventListener('click',saveEntry);
