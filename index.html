@@ -236,15 +236,54 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 @media(max-width:768px){
-  header{padding:0 1rem;gap:0.8rem}
+  /* ── HEADER ── */
+  header{padding:0 1rem;height:52px;gap:0}
+  .logo-main{font-size:1.25rem}
+  .logo-sep{display:none}
   .logo-sub{display:none}
-  .filter-bar{padding:0 1rem;top:58px}
-  .grid-wrap{padding:1.2rem 1rem 2rem}
-  .grid.view-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.9rem}
+  .nav-center{display:none}
+  .nav-search{display:none}
+  .nav-right{margin-left:auto;gap:0.8rem}
+  .btn-new{padding:0.32rem 0.75rem;font-size:0.56rem}
+
+  /* ── MOBILE SEARCH BAR ── */
+  .mobile-search-bar{display:flex;align-items:center;padding:0.6rem 1rem;background:rgba(17,16,16,0.95);border-bottom:1px solid var(--border-soft);gap:0.5rem}
+  .mobile-search-bar input{flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;padding:0.45rem 1rem;font-family:'Jost',sans-serif;font-weight:300;font-size:0.82rem;color:var(--text);outline:none}
+  .mobile-search-bar input::placeholder{color:var(--text-dim)}
+  .mobile-search-bar input:focus{border-color:var(--pink-deep)}
+
+  /* ── UPDATED DATE ── */
+  .mobile-updated{display:block;font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.18em;color:var(--text-dim);text-transform:uppercase;padding:0.4rem 1rem;border-bottom:1px solid var(--border-soft);opacity:0.6}
+
+  /* ── FILTER CHIPS ── */
+  .filter-bar{padding:0.5rem 1rem;height:auto;top:52px;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:0.4rem;flex-wrap:nowrap;background:rgba(17,16,16,0.95)}
+  .filter-tab{height:auto;border-bottom:none;border:1px solid var(--border);border-radius:999px;padding:0.26rem 0.8rem;font-size:0.68rem;margin-bottom:0;flex-shrink:0;white-space:nowrap}
+  .filter-tab.active{background:var(--pink-muted);border-color:var(--pink-deep);color:var(--pink-pale)}
+  .filter-sep{display:none}
+  .more-wrap{display:none}
+  .filter-spacer{display:none}
+  .filter-right{display:none}
+
+  /* ── GRID — single column, large cards ── */
+  .grid-wrap{padding:1rem 1rem 3rem}
+  .grid.view-grid{grid-template-columns:1fr;gap:1rem}
+  .grid.view-list{grid-template-columns:1fr;gap:0.6rem}
+  .card-img{aspect-ratio:16/9}
+  .card-body{padding:0.9rem 1rem 1rem}
+  .card-title{font-size:1.05rem}
+  .card-excerpt{-webkit-line-clamp:2}
+
+  /* ── MODALS ── */
   .form-row{grid-template-columns:1fr}
   .modal-body,.modal-head{padding-left:1.2rem;padding-right:1.2rem}
+  .modal{max-height:95vh}
+
+  /* ── TOAST ── */
   .toast{bottom:1rem;right:1rem;left:1rem}
-  footer{flex-direction:column;gap:0.8rem;padding:1.3rem 1rem}
+
+  /* ── FOOTER ── */
+  footer{flex-direction:column;gap:0.5rem;padding:1rem 1rem;opacity:0.5}
+  .footer-logo{display:none}
 }
 </style>
 </head>
@@ -272,8 +311,18 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
   </div>
 </header>
 
+<!-- MOBILE ONLY -->
+<div class="mobile-updated" id="mobile-updated" style="display:none"></div>
+<div class="mobile-search-bar" style="display:none">
+  <input type="text" id="mobile-search-input" placeholder="Search films…">
+</div>
+
 <!-- FILTER BAR -->
 <div class="filter-bar" id="filter-bar">
+  <button class="filter-tab active" data-filter="all">All</button>
+  <button class="filter-tab" data-filter="movie">Films</button>
+  <button class="filter-tab" data-filter="series">Series</button>
+  <span class="filter-sep"></span>
   <button class="filter-tab" data-filter="action">Action</button>
   <button class="filter-tab" data-filter="drama">Drama</button>
   <button class="filter-tab" data-filter="comedy">Comedy</button>
@@ -846,9 +895,33 @@ async function loadComments(entryId){
   }
 }
 
+// ── MOBILE INIT ──
+function initMobile(){
+  const isMobile=window.innerWidth<=768;
+  const mobileUpdated=document.getElementById('mobile-updated');
+  const mobileSearch=document.querySelector('.mobile-search-bar');
+  if(isMobile){
+    mobileUpdated.style.display='block';
+    mobileSearch.style.display='flex';
+    const now=new Date();
+    mobileUpdated.textContent=`Updated ${now.toLocaleString('en-US',{month:'short'})}. ${now.getFullYear()}`;
+  } else {
+    mobileUpdated.style.display='none';
+    mobileSearch.style.display='none';
+  }
+}
+document.getElementById('mobile-search-input')?.addEventListener('input',e=>{
+  searchQuery=e.target.value.trim().toLowerCase();
+  document.getElementById('search-input').value=searchQuery;
+  document.getElementById('search-clear').classList.toggle('show',searchQuery.length>0);
+  render();
+});
+window.addEventListener('resize',initMobile);
+
 (async()=>{
   const{data:{session}}=await sb.auth.getSession();
   currentUser=session?.user??null;updateAuthUI();await loadEntries();
+  initMobile();
 })();
 </script>
 </body>
