@@ -164,7 +164,7 @@ textarea{resize:vertical;min-height:88px;line-height:1.65}
 .btn-sec:hover{border-color:var(--pink-deep);color:var(--pink-pale)}
 .btn-danger{background:transparent;color:var(--text-dim);border:1px solid var(--border-soft);padding:0.38rem 0.95rem;font-family:'Courier Prime',monospace;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s;margin-top:1rem}
 .btn-danger:hover{border-color:#7a3333;color:var(--red)}
-.detail-cover{width:100%;max-height:420px;object-fit:contain;display:block;background:#000}
+.detail-cover{width:100%;max-height:320px;object-fit:cover;display:block}
 .detail-cover-empty{width:100%;height:160px;background:linear-gradient(135deg,var(--surface),#1e1515);display:flex;align-items:center;justify-content:center;font-size:2.5rem;opacity:0.3}
 .detail-rating-row{display:flex;align-items:baseline;gap:0.4rem;margin-bottom:0.35rem}
 .detail-rating-star{color:var(--accent);font-size:1.5rem;font-family:'Lora',serif}
@@ -275,9 +275,7 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
 
   /* ── MODALS ── */
   .form-row{grid-template-columns:1fr}
-  .modal-body,.modal-head{padding-left:1rem;padding-right:1rem}
-  .modal{border-radius:0;max-width:100%;width:100%;margin:0;max-height:100vh;height:100vh}
-  .overlay{padding:0}
+  .modal-body,.modal-head{padding-left:1.2rem;padding-right:1.2rem}
   .modal{max-height:95vh}
 
   /* ── TOAST ── */
@@ -416,11 +414,21 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
         <div id="f-review" class="review-editor" contenteditable="true" data-placeholder="Write your thoughts…"></div>
       </div>
       <div class="fg">
-        <label>照片</label>
+        <label>封面照（首頁卡片顯示，建議直式海報）</label>
+        <div class="photo-drop" id="cover-drop">
+          <input type="file" id="f-cover" accept="image/*">
+          <div class="photo-drop-icon">🎬</div>
+          <p>Upload cover — 建議 2:3 直式</p>
+        </div>
+        <div id="cover-preview" class="photo-row"></div>
+        <div id="existing-cover" style="margin-top:0.75rem"></div>
+      </div>
+      <div class="fg">
+        <label>內容照片（詳情頁顯示，建議橫式劇照）</label>
         <div class="photo-drop">
           <input type="file" id="f-photos" accept="image/*" multiple>
           <div class="photo-drop-icon">🎞</div>
-          <p>Upload poster / stills</p>
+          <p>Upload stills — 可多選，建議橫式</p>
         </div>
         <div id="existing-photos" style="margin-top:0.75rem"></div>
         <div class="photo-row" id="photo-preview"></div>
@@ -633,7 +641,24 @@ async function saveEntry(){
   if(!titleVal){showToast('請輸入作品名稱','error');return}
   const saveBtn=document.getElementById('save-btn');saveBtn.disabled=true;saveBtn.innerHTML='<span class="spinner"></span>Saving…';
   try{
+    // 刪除被移除的照片
     for(const url of removedPhotoUrls){const p=urlToStoragePath(url);if(p)await sb.storage.from(BUCKET).remove([p])}
+
+    // 上傳封面照
+    let coverPhotoUrl=null;
+    const coverFile=document.getElementById('f-cover').files[0];
+    if(coverFile){
+      const ext=coverFile.name.split('.').pop();
+      const path=`${currentUser.id}/cover_${Date.now()}.${ext}`;
+      const{error:upErr}=await sb.storage.from(BUCKET).upload(path,coverFile,{upsert:false});
+      if(!upErr){const{data:{publicUrl}}=sb.storage.from(BUCKET).getPublicUrl(path);coverPhotoUrl=publicUrl}
+    } else {
+      // 保留現有封面
+      const existingCover=document.querySelector('#existing-cover .photo-thumb');
+      if(existingCover)coverPhotoUrl=existingCover.dataset.url;
+    }
+
+    // 上傳內容照片
     const uploadedUrls=[];
     for(const file of newPhotos){
       const ext=file.name.split('.').pop();
@@ -644,8 +669,9 @@ async function saveEntry(){
     }
     const keepUrls=Array.from(document.querySelectorAll('#existing-photos .photo-thumb')).map(img=>img.dataset.url);
     const finalPhotos=[...keepUrls,...uploadedUrls];
+
     const ratingVal=parseFloat(document.getElementById('f-rating').value)||0;
-    const payload={user_id:currentUser.id,title:titleVal,original_title:document.getElementById('f-orig').value.trim(),type:document.getElementById('f-type').value,year:document.getElementById('f-year').value||null,genre:selectedGenres.length?selectedGenres:null,rating:ratingVal,review:document.getElementById('f-review').innerHTML.trim(),photos:finalPhotos,updated_at:new Date().toISOString()};
+    const payload={user_id:currentUser.id,title:titleVal,original_title:document.getElementById('f-orig').value.trim(),type:document.getElementById('f-type').value,year:document.getElementById('f-year').value||null,genre:selectedGenres.length?selectedGenres:null,rating:ratingVal,review:document.getElementById('f-review').innerHTML.trim(),photos:finalPhotos,cover_photo:coverPhotoUrl,updated_at:new Date().toISOString()};
     let error;
     if(editId){({error}=await sb.from('entries').update(payload).eq('id',editId).eq('user_id',currentUser.id));}
     else{payload.created_at=new Date().toISOString();({error}=await sb.from('entries').insert(payload))}
@@ -714,8 +740,9 @@ function render(list){
     div.className='card'+(isList?' list-card':'');
     div.style.animation=`fadeUp 0.38s ease ${Math.min(i,10)*0.04}s both`;
     const imgWrap=document.createElement('div');imgWrap.className='card-img-wrap';
-    if(e.photos&&e.photos[0]){
-      const img=document.createElement('img');img.className='card-img';img.src=e.photos[0];img.alt='';imgWrap.appendChild(img);
+    const cardImg=e.cover_photo||(e.photos&&e.photos[0]);
+    if(cardImg){
+      const img=document.createElement('img');img.className='card-img';img.src=cardImg;img.alt='';imgWrap.appendChild(img);
       if(!isList&&e.rating){
         const ov=document.createElement('div');ov.className='card-img-overlay';
         ov.innerHTML=`<span class="card-overlay-rating">★ ${parseFloat(e.rating).toFixed(1)}</span>`;
@@ -743,10 +770,25 @@ function showAddModal(){
   document.getElementById('f-review').innerHTML='';
   document.getElementById('f-type').value='movie';syncRating(0);buildGenreGrid([]);
   document.getElementById('photo-preview').innerHTML='';document.getElementById('existing-photos').innerHTML='';
-  document.getElementById('f-photos').value='';openOverlay('add-overlay');
+  document.getElementById('cover-preview').innerHTML='';document.getElementById('existing-cover').innerHTML='';
+  document.getElementById('f-photos').value='';document.getElementById('f-cover').value='';
+  openOverlay('add-overlay');
 }
 document.getElementById('add-close').addEventListener('click',()=>closeOverlay('add-overlay'));
 document.getElementById('add-overlay').addEventListener('click',e=>{if(e.target===document.getElementById('add-overlay'))closeOverlay('add-overlay')});
+
+// 封面照預覽
+document.getElementById('f-cover').addEventListener('change',e=>{
+  const file=e.target.files[0];if(!file)return;
+  const url=URL.createObjectURL(file);
+  const preview=document.getElementById('cover-preview');
+  preview.innerHTML='';
+  const wrap=document.createElement('div');wrap.className='photo-thumb-wrap';
+  const img=document.createElement('img');img.src=url;img.className='photo-thumb';img.style.cssText='width:80px;height:120px;object-fit:cover';
+  const rm=document.createElement('button');rm.className='photo-remove';rm.textContent='×';
+  rm.addEventListener('click',()=>{preview.innerHTML='';e.target.value=''});
+  wrap.appendChild(img);wrap.appendChild(rm);preview.appendChild(wrap);
+});
 
 document.getElementById('f-photos').addEventListener('change',e=>{
   Array.from(e.target.files).forEach(file=>{
@@ -791,7 +833,8 @@ async function openDetail(id){
   document.getElementById('d-title').textContent=e.title;
   document.getElementById('d-sub').textContent=(e.original_title||'')+(e.year?' · '+e.year:'')+' · '+(e.type==='movie'?'Film':'Series');
   const coverEl=document.getElementById('d-cover');
-  if(e.photos&&e.photos[0]){coverEl.innerHTML='';const img=document.createElement('img');img.className='detail-cover';img.src=e.photos[0];img.alt='';coverEl.appendChild(img)}
+  const detailImg=e.photos&&e.photos[0]?e.photos[0]:(e.cover_photo||null);
+  if(detailImg){coverEl.innerHTML='';const img=document.createElement('img');img.className='detail-cover';img.src=detailImg;img.alt='';coverEl.appendChild(img)}
   else{coverEl.innerHTML='<div class="detail-cover-empty">🎬</div>'}
   if(e.rating){
     document.getElementById('d-star-icon').textContent='★';
@@ -834,6 +877,19 @@ document.getElementById('d-edit-btn').addEventListener('click',()=>{
   const genreArr=Array.isArray(e.genre)?e.genre:(e.genre?[e.genre]:[]);
   buildGenreGrid(genreArr);
   document.getElementById('photo-preview').innerHTML='';document.getElementById('f-photos').value='';
+  document.getElementById('cover-preview').innerHTML='';document.getElementById('f-cover').value='';
+  // 顯示現有封面
+  const existingCoverEl=document.getElementById('existing-cover');existingCoverEl.innerHTML='';
+  if(e.cover_photo){
+    const label=document.createElement('div');label.style.cssText='font-family:Courier Prime,monospace;font-size:0.54rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:0.38rem';label.textContent='現有封面（點 × 移除）';
+    const row=document.createElement('div');row.className='photo-row';
+    const wrap=document.createElement('div');wrap.className='photo-thumb-wrap';
+    const img=document.createElement('img');img.src=e.cover_photo;img.className='photo-thumb';img.dataset.url=e.cover_photo;img.style.cssText='width:80px;height:120px;object-fit:cover';
+    const rm=document.createElement('button');rm.className='photo-remove';rm.textContent='×';
+    rm.addEventListener('click',()=>{removedPhotoUrls.push(e.cover_photo);wrap.remove()});
+    wrap.appendChild(img);wrap.appendChild(rm);row.appendChild(wrap);
+    existingCoverEl.appendChild(label);existingCoverEl.appendChild(row);
+  }
   renderExistingPhotos(e.photos||[]);openOverlay('add-overlay');
 });
 document.getElementById('d-delete-btn').addEventListener('click',()=>{closeOverlay('detail-overlay');setTimeout(()=>deleteEntry(currentDetailId),150)});
