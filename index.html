@@ -164,7 +164,7 @@ textarea{resize:vertical;min-height:88px;line-height:1.65}
 .btn-sec:hover{border-color:var(--pink-deep);color:var(--pink-pale)}
 .btn-danger{background:transparent;color:var(--text-dim);border:1px solid var(--border-soft);padding:0.38rem 0.95rem;font-family:'Courier Prime',monospace;font-size:0.57rem;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:all 0.2s;margin-top:1rem}
 .btn-danger:hover{border-color:#7a3333;color:var(--red)}
-.detail-cover{width:100%;max-height:320px;object-fit:cover;display:block}
+.detail-cover{width:100%;max-height:420px;object-fit:cover;display:block}
 .detail-cover-empty{width:100%;height:160px;background:linear-gradient(135deg,var(--surface),#1e1515);display:flex;align-items:center;justify-content:center;font-size:2.5rem;opacity:0.3}
 .detail-rating-row{display:flex;align-items:baseline;gap:0.4rem;margin-bottom:0.35rem}
 .detail-rating-star{color:var(--accent);font-size:1.5rem;font-family:'Lora',serif}
@@ -275,7 +275,9 @@ footer{border-top:1px solid var(--border-soft);padding:1.8rem 2rem;display:flex;
 
   /* ── MODALS ── */
   .form-row{grid-template-columns:1fr}
-  .modal-body,.modal-head{padding-left:1.2rem;padding-right:1.2rem}
+  .modal-body,.modal-head{padding-left:1rem;padding-right:1rem}
+  .modal{border-radius:0;max-width:100%;width:100%;margin:0;max-height:100vh;height:100vh}
+  .overlay{padding:0}
   .modal{max-height:95vh}
 
   /* ── TOAST ── */
